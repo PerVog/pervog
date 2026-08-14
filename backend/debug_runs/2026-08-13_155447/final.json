@@ -1,0 +1,341 @@
+{
+  "analysis_id": "c3dd0048",
+  "overall_outfit": {
+    "outfit_type": "outfit combo",
+    "style": "casual",
+    "formality": 3,
+    "occasion": [
+      "casual"
+    ],
+    "confidence": 0.9
+  },
+  "items": [
+    {
+      "region_id": "region_1",
+      "bbox": [
+        51,
+        27,
+        249,
+        369
+      ],
+      "crop_hash": "d4b6aa22fa9dd6dcb0fae57109bda8786a37c5cfc9a1926d8a9a56764911f197",
+      "image_url": "/storage/crops/c3dd0048_region_1.png",
+      "mask_url": "/storage/crops/c3dd0048_mask_region_1.png",
+      "item_type": {
+        "value": "casual_shirt",
+        "confidence": 0.86
+      },
+      "category": "upper_body",
+      "display_name": "Casual Shirt",
+      "color": {
+        "primary": "black",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 100.0
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "upper_body",
+        "confidence": 0.86
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.8
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "garment_attributes": {
+        "attributes": [
+          {
+            "attribute": "kangaroo (pocket)",
+            "score": 0.709
+          },
+          {
+            "attribute": "no non-textile material",
+            "score": 0.4017
+          },
+          {
+            "attribute": "no special manufacturing technique",
+            "score": 0.1548
+          },
+          {
+            "attribute": "plain (pattern)",
+            "score": 0.1507
+          },
+          {
+            "attribute": "patch (pocket)",
+            "score": 0.0948
+          }
+        ],
+        "top_attribute": "kangaroo (pocket)"
+      },
+      "formality": {
+        "value": 4,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "polo_shirt",
+          "score": 0.5891
+        },
+        "grounding_dino": {
+          "labels": [
+            {
+              "type": "casual_shirt",
+              "score": 0.91,
+              "raw_label": "long_sleeve_outwear"
+            },
+            {
+              "type": "casual_shirt",
+              "score": 0.89,
+              "raw_label": "jacket or shirt"
+            },
+            {
+              "type": "jeans",
+              "score": 0.2706,
+              "raw_label": "jeans"
+            }
+          ],
+          "models": [
+            "deepfashion2",
+            "florence_2",
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "suit_jacket",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.86
+    },
+    {
+      "region_id": "region_2",
+      "bbox": [
+        57,
+        192,
+        242,
+        516
+      ],
+      "crop_hash": "0b544c1cc0740f4ffffc381b05a62c7f9ac34add275fbd8b49e1f7789bdad378",
+      "image_url": "/storage/crops/c3dd0048_region_2.png",
+      "mask_url": "/storage/crops/c3dd0048_mask_region_2.png",
+      "item_type": {
+        "value": "jeans",
+        "confidence": 0.55
+      },
+      "category": "lower_body",
+      "display_name": "Jeans",
+      "color": {
+        "primary": "black",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 100.0
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "lower_body",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "relaxed",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "garment_attributes": {
+        "attributes": [
+          {
+            "attribute": "kangaroo (pocket)",
+            "score": 0.278
+          },
+          {
+            "attribute": "patch (pocket)",
+            "score": 0.1485
+          },
+          {
+            "attribute": "no non-textile material",
+            "score": 0.0624
+          },
+          {
+            "attribute": "sheath (skirt)",
+            "score": 0.0408
+          },
+          {
+            "attribute": "straight",
+            "score": 0.0386
+          }
+        ],
+        "top_attribute": "kangaroo (pocket)"
+      },
+      "formality": {
+        "value": 3,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "jeans",
+          "score": 0.3046
+        },
+        "grounding_dino": {
+          "labels": [
+            {
+              "type": "formal_trousers",
+              "score": 0.9,
+              "raw_label": "trousers"
+            },
+            {
+              "type": "loose_pants",
+              "score": 0.86,
+              "raw_label": "pants or trousers"
+            },
+            {
+              "type": "casual_shirt",
+              "score": 0.2863,
+              "raw_label": "casual shirt"
+            }
+          ],
+          "models": [
+            "deepfashion2",
+            "florence_2",
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "suit_trousers",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    },
+    {
+      "region_id": "region_3",
+      "bbox": [
+        70,
+        514,
+        230,
+        581
+      ],
+      "crop_hash": "73741e6f62f037e8e62a7761bf261d01481b2478a2eb397bb51437c8f0f7622b",
+      "image_url": "/storage/crops/c3dd0048_region_3.png",
+      "mask_url": "/storage/crops/c3dd0048_mask_region_3.png",
+      "item_type": {
+        "value": "formal_shoes",
+        "confidence": 0.55
+      },
+      "category": "footwear",
+      "display_name": "Formal Shoes",
+      "color": {
+        "primary": "dark brown",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "dark brown",
+            "rgb": [
+              70,
+              40,
+              20
+            ],
+            "percentage": 100.0
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "Footwear",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.8
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "garment_attributes": {
+        "attributes": [
+          {
+            "attribute": "kangaroo (pocket)",
+            "score": 0.4983
+          },
+          {
+            "attribute": "patch (pocket)",
+            "score": 0.4335
+          },
+          {
+            "attribute": "set-in sleeve",
+            "score": 0.0124
+          },
+          {
+            "attribute": "welt (pocket)",
+            "score": 0.0101
+          },
+          {
+            "attribute": "wrist-length",
+            "score": 0.008
+          }
+        ],
+        "top_attribute": "kangaroo (pocket)"
+      },
+      "formality": {
+        "value": 9,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "boots",
+          "score": 0.2827
+        },
+        "grounding_dino": {
+          "labels": [
+            {
+              "type": "formal_shoes",
+              "score": 0.85,
+              "raw_label": "shoes"
+            },
+            {
+              "type": "casual_shirt",
+              "score": 0.3018,
+              "raw_label": "clothing item"
+            }
+          ],
+          "models": [
+            "florence_2",
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "formal_shoes",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    }
+  ]
+}

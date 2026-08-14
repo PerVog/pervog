@@ -1,0 +1,642 @@
+{
+  "overall_outfit": {
+    "outfit_type": "outfit combo",
+    "style": "casual",
+    "formality": 3,
+    "occasion": [
+      "casual"
+    ],
+    "confidence": 0.9
+  },
+  "items": [
+    {
+      "region_id": "region_1",
+      "bbox": [
+        31,
+        4,
+        176,
+        361
+      ],
+      "item_type": {
+        "value": "watch",
+        "confidence": 0.55
+      },
+      "category": "accessory",
+      "display_name": "Watch",
+      "color": {
+        "primary": "khaki",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "khaki",
+            "rgb": [
+              195,
+              175,
+              135
+            ],
+            "percentage": 74.8
+          },
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 13.4
+          },
+          {
+            "name": "off-white",
+            "rgb": [
+              245,
+              245,
+              240
+            ],
+            "percentage": 11.8
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "accessory",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 6,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "belt",
+          "score": 0.4663
+        },
+        "grounding_dino": {
+          "labels": [
+            "clothing item",
+            "watch",
+            "watch"
+          ],
+          "models": [
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "agreement": false
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    },
+    {
+      "region_id": "region_2",
+      "bbox": [
+        32,
+        18,
+        161,
+        174
+      ],
+      "item_type": {
+        "value": "oxford_shoes",
+        "confidence": 0.57
+      },
+      "category": "footwear",
+      "display_name": "Oxford Shoes",
+      "color": {
+        "primary": "khaki",
+        "secondary": [
+          "off-white",
+          "olive"
+        ],
+        "dominant_colors": [
+          {
+            "name": "khaki",
+            "rgb": [
+              195,
+              175,
+              135
+            ],
+            "percentage": 58.1
+          },
+          {
+            "name": "off-white",
+            "rgb": [
+              245,
+              245,
+              240
+            ],
+            "percentage": 26.1
+          },
+          {
+            "name": "olive",
+            "rgb": [
+              105,
+              115,
+              55
+            ],
+            "percentage": 15.8
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "footwear",
+        "confidence": 0.57
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 9,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "oxford_shoes",
+          "score": 0.3053
+        },
+        "grounding_dino": {
+          "labels": [
+            "Derby shoes",
+            "formal shoes",
+            "joggers",
+            "jacket",
+            "jacket or shirt",
+            "long_sleeve_outwear"
+          ],
+          "models": [
+            "grounding_dino",
+            "florence",
+            "deepfashion2"
+          ]
+        },
+        "qwen": {
+          "item_type": "sandals",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.57
+    },
+    {
+      "region_id": "region_3",
+      "bbox": [
+        64,
+        28,
+        113,
+        158
+      ],
+      "item_type": {
+        "value": "formal_trousers",
+        "confidence": 0.63
+      },
+      "category": "lower_body",
+      "display_name": "Formal Trousers",
+      "color": {
+        "primary": "white",
+        "secondary": [
+          "light grey"
+        ],
+        "dominant_colors": [
+          {
+            "name": "white",
+            "rgb": [
+              250,
+              250,
+              250
+            ],
+            "percentage": 64.3
+          },
+          {
+            "name": "light grey",
+            "rgb": [
+              200,
+              200,
+              200
+            ],
+            "percentage": 29.4
+          },
+          {
+            "name": "light grey",
+            "rgb": [
+              200,
+              200,
+              200
+            ],
+            "percentage": 6.3
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "lower_body",
+        "confidence": 0.63
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 8,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "formal_trousers",
+          "score": 0.3295
+        },
+        "grounding_dino": {
+          "labels": [
+            "formal trousers"
+          ],
+          "models": [
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "loose_pants",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.63
+    },
+    {
+      "region_id": "region_4",
+      "bbox": [
+        37,
+        163,
+        151,
+        320
+      ],
+      "item_type": {
+        "value": "formal_trousers",
+        "confidence": 0.84
+      },
+      "category": "lower_body",
+      "display_name": "Formal Trousers",
+      "color": {
+        "primary": "khaki",
+        "secondary": [
+          "grey"
+        ],
+        "dominant_colors": [
+          {
+            "name": "khaki",
+            "rgb": [
+              195,
+              175,
+              135
+            ],
+            "percentage": 54.7
+          },
+          {
+            "name": "grey",
+            "rgb": [
+              128,
+              128,
+              128
+            ],
+            "percentage": 40.9
+          },
+          {
+            "name": "dark grey",
+            "rgb": [
+              70,
+              70,
+              70
+            ],
+            "percentage": 4.4
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "lower_body",
+        "confidence": 0.84
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 8,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "formal_trousers",
+          "score": 0.4929
+        },
+        "grounding_dino": {
+          "labels": [
+            "tie",
+            "clothing item",
+            "glasses",
+            "clothing item",
+            "clothing item",
+            "pants or trousers",
+            "trousers"
+          ],
+          "models": [
+            "grounding_dino",
+            "florence",
+            "deepfashion2"
+          ]
+        },
+        "qwen": {
+          "item_type": "loose_pants",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.84
+    },
+    {
+      "region_id": "region_5",
+      "bbox": [
+        42,
+        316,
+        149,
+        356
+      ],
+      "item_type": {
+        "value": "formal_shoes",
+        "confidence": 0.55
+      },
+      "category": "footwear",
+      "display_name": "Formal Shoes",
+      "color": {
+        "primary": "charcoal",
+        "secondary": [
+          "charcoal",
+          "dark grey"
+        ],
+        "dominant_colors": [
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 55.8
+          },
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 28.7
+          },
+          {
+            "name": "dark grey",
+            "rgb": [
+              70,
+              70,
+              70
+            ],
+            "percentage": 15.5
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "footwear",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 9,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "boots",
+          "score": 0.76
+        },
+        "grounding_dino": {
+          "labels": [
+            "shoes"
+          ],
+          "models": [
+            "florence"
+          ]
+        },
+        "qwen": {
+          "item_type": "sandals",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    },
+    {
+      "region_id": "region_6",
+      "bbox": [
+        36,
+        329,
+        120,
+        367
+      ],
+      "item_type": {
+        "value": "casual_shirt",
+        "confidence": 0.55
+      },
+      "category": "upper_body",
+      "display_name": "Casual Shirt",
+      "color": {
+        "primary": "charcoal",
+        "secondary": [
+          "charcoal"
+        ],
+        "dominant_colors": [
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 51.9
+          },
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 37.6
+          },
+          {
+            "name": "dark grey",
+            "rgb": [
+              70,
+              70,
+              70
+            ],
+            "percentage": 10.5
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "upper_body",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 4,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "loafers",
+          "score": 0.245
+        },
+        "grounding_dino": {
+          "labels": [
+            "clothing item",
+            "clothing item",
+            "clothing item",
+            "clothing item"
+          ],
+          "models": [
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "sandals",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    },
+    {
+      "region_id": "region_7",
+      "bbox": [
+        104,
+        333,
+        147,
+        365
+      ],
+      "item_type": {
+        "value": "oxford_shoes",
+        "confidence": 0.55
+      },
+      "category": "footwear",
+      "display_name": "Oxford Shoes",
+      "color": {
+        "primary": "charcoal",
+        "secondary": [
+          "charcoal"
+        ],
+        "dominant_colors": [
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 65.3
+          },
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 23.2
+          },
+          {
+            "name": "dark grey",
+            "rgb": [
+              70,
+              70,
+              70
+            ],
+            "percentage": 11.5
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "footwear",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 9,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "oxford_shoes",
+          "score": 0.4438
+        },
+        "grounding_dino": {
+          "labels": [
+            "clothing item",
+            "clothing item"
+          ],
+          "models": [
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "sandals",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    }
+  ]
+}

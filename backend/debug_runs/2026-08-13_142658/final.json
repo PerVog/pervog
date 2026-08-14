@@ -1,0 +1,276 @@
+{
+  "overall_outfit": {
+    "outfit_type": "outfit combo",
+    "style": "casual",
+    "formality": 3,
+    "occasion": [
+      "casual"
+    ],
+    "confidence": 0.9
+  },
+  "items": [
+    {
+      "region_id": "region_1",
+      "bbox": [
+        46,
+        27,
+        253,
+        291
+      ],
+      "item_type": {
+        "value": "casual_shirt",
+        "confidence": 0.86
+      },
+      "category": "upper_body",
+      "display_name": "Casual Shirt",
+      "color": {
+        "primary": "royal blue",
+        "secondary": [
+          "yellow"
+        ],
+        "dominant_colors": [
+          {
+            "name": "royal blue",
+            "rgb": [
+              30,
+              60,
+              180
+            ],
+            "percentage": 71.6
+          },
+          {
+            "name": "yellow",
+            "rgb": [
+              245,
+              215,
+              40
+            ],
+            "percentage": 16.2
+          },
+          {
+            "name": "light grey",
+            "rgb": [
+              200,
+              200,
+              200
+            ],
+            "percentage": 12.3
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "upper_body",
+        "confidence": 0.86
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 4,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "dress_shirt",
+          "score": 0.3551
+        },
+        "grounding_dino": {
+          "labels": [
+            "jacket or shirt",
+            "long_sleeve_outwear"
+          ],
+          "models": [
+            "florence",
+            "deepfashion2"
+          ]
+        },
+        "qwen": {
+          "item_type": "casual_shirt",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": false,
+      "confidence": 0.86
+    },
+    {
+      "region_id": "region_2",
+      "bbox": [
+        57,
+        270,
+        242,
+        513
+      ],
+      "item_type": {
+        "value": "formal_trousers",
+        "confidence": 0.84
+      },
+      "category": "lower_body",
+      "display_name": "Formal Trousers",
+      "color": {
+        "primary": "cream",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "cream",
+            "rgb": [
+              240,
+              235,
+              215
+            ],
+            "percentage": 92.7
+          },
+          {
+            "name": "off-white",
+            "rgb": [
+              245,
+              245,
+              240
+            ],
+            "percentage": 6.9
+          },
+          {
+            "name": "white",
+            "rgb": [
+              250,
+              250,
+              250
+            ],
+            "percentage": 0.4
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "lower_body",
+        "confidence": 0.84
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 8,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "formal_trousers",
+          "score": 0.3227
+        },
+        "grounding_dino": {
+          "labels": [
+            "clothing item",
+            "pants or trousers",
+            "trousers"
+          ],
+          "models": [
+            "grounding_dino",
+            "florence",
+            "deepfashion2"
+          ]
+        },
+        "qwen": {
+          "item_type": "loose_pants",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.84
+    },
+    {
+      "region_id": "region_3",
+      "bbox": [
+        66,
+        516,
+        234,
+        582
+      ],
+      "item_type": {
+        "value": "derby_shoes",
+        "confidence": 0.55
+      },
+      "category": "footwear",
+      "display_name": "Derby Shoes",
+      "color": {
+        "primary": "white",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "white",
+            "rgb": [
+              250,
+              250,
+              250
+            ],
+            "percentage": 91.5
+          },
+          {
+            "name": "brown",
+            "rgb": [
+              110,
+              65,
+              35
+            ],
+            "percentage": 6.4
+          },
+          {
+            "name": "brown",
+            "rgb": [
+              110,
+              65,
+              35
+            ],
+            "percentage": 2.0
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "footwear",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 8,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "derby_shoes",
+          "score": 0.3062
+        },
+        "grounding_dino": {
+          "labels": [
+            "shoes"
+          ],
+          "models": [
+            "florence"
+          ]
+        },
+        "qwen": {
+          "item_type": "sandals",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    }
+  ]
+}

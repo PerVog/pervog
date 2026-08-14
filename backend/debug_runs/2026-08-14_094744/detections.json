@@ -1,0 +1,255 @@
+[
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      46,
+      342,
+      144,
+      396
+    ],
+    "score": 0.445
+  },
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      66,
+      18,
+      84,
+      88
+    ],
+    "score": 0.59
+  },
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      46,
+      341,
+      91,
+      377
+    ],
+    "score": 0.4267
+  },
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      114,
+      360,
+      143,
+      397
+    ],
+    "score": 0.4007
+  },
+  {
+    "model": "grounding_dino",
+    "label": "Derby shoes",
+    "box": [
+      21,
+      8,
+      148,
+      186
+    ],
+    "score": 0.4041
+  },
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      46,
+      341,
+      143,
+      397
+    ],
+    "score": 0.2977
+  },
+  {
+    "model": "grounding_dino",
+    "label": "tie",
+    "box": [
+      39,
+      156,
+      140,
+      361
+    ],
+    "score": 0.4096
+  },
+  {
+    "model": "grounding_dino",
+    "label": "formal shoes",
+    "box": [
+      20,
+      9,
+      149,
+      185
+    ],
+    "score": 0.4411
+  },
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      21,
+      0,
+      147,
+      383
+    ],
+    "score": 0.2862
+  },
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      46,
+      342,
+      91,
+      377
+    ],
+    "score": 0.275
+  },
+  {
+    "model": "grounding_dino",
+    "label": "jeans",
+    "box": [
+      58,
+      8,
+      96,
+      88
+    ],
+    "score": 0.274
+  },
+  {
+    "model": "grounding_dino",
+    "label": "watch",
+    "box": [
+      21,
+      0,
+      147,
+      389
+    ],
+    "score": 0.3457
+  },
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      114,
+      359,
+      143,
+      396
+    ],
+    "score": 0.2594
+  },
+  {
+    "model": "grounding_dino",
+    "label": "joggers",
+    "box": [
+      22,
+      9,
+      147,
+      184
+    ],
+    "score": 0.3069
+  },
+  {
+    "model": "grounding_dino",
+    "label": "glasses",
+    "box": [
+      39,
+      157,
+      140,
+      361
+    ],
+    "score": 0.347
+  },
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      40,
+      176,
+      87,
+      344
+    ],
+    "score": 0.2638
+  },
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      39,
+      155,
+      139,
+      360
+    ],
+    "score": 0.3272
+  },
+  {
+    "model": "grounding_dino",
+    "label": "jeans",
+    "box": [
+      61,
+      9,
+      95,
+      57
+    ],
+    "score": 0.2937
+  },
+  {
+    "model": "florence_2",
+    "label": "jacket or shirt",
+    "box": [
+      29,
+      16,
+      152,
+      196
+    ],
+    "score": 0.89
+  },
+  {
+    "model": "florence_2",
+    "label": "pants or trousers",
+    "box": [
+      34,
+      184,
+      147,
+      340
+    ],
+    "score": 0.86
+  },
+  {
+    "model": "florence_2",
+    "label": "shoes",
+    "box": [
+      40,
+      344,
+      141,
+      388
+    ],
+    "score": 0.85
+  },
+  {
+    "model": "deepfashion2",
+    "label": "long_sleeve_outwear",
+    "box": [
+      27,
+      20,
+      154,
+      192
+    ],
+    "score": 0.91
+  },
+  {
+    "model": "deepfashion2",
+    "label": "trousers",
+    "box": [
+      32,
+      180,
+      149,
+      344
+    ],
+    "score": 0.9
+  }
+]

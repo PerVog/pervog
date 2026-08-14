@@ -1,0 +1,1519 @@
+[
+  {
+    "id": 1,
+    "title": "Classic White Oxford Shirt",
+    "category": "Shirt",
+    "primary_color": "white",
+    "image_url": "/uploads/seed_item_1_white_shirt.jpg",
+    "style": "casual",
+    "formality": 4,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "office",
+      "college"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Navy Blue Slim Button-Down",
+    "category": "Shirt",
+    "primary_color": "navy",
+    "image_url": "/uploads/seed_item_2_navy_shirt.jpg",
+    "style": "smart_casual",
+    "formality": 5,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "date",
+      "casual"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Light Blue Denim Shirt",
+    "category": "Shirt",
+    "primary_color": "blue",
+    "image_url": "/uploads/seed_item_3_blue_shirt.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "denim",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "outing"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Black Graphic Streetwear Tee",
+    "category": "T-Shirt",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_4_black_t-shirt.jpg",
+    "style": "streetwear",
+    "formality": 2,
+    "material": "cotton",
+    "pattern": "printed",
+    "fit": "oversized",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "college",
+      "party"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Grey Heather Crewneck Tee",
+    "category": "T-Shirt",
+    "primary_color": "grey",
+    "image_url": "/uploads/seed_item_5_grey_t-shirt.jpg",
+    "style": "casual",
+    "formality": 2,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "gym",
+      "travel"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Beige Linen Resort Shirt",
+    "category": "Shirt",
+    "primary_color": "beige",
+    "image_url": "/uploads/seed_item_6_beige_shirt.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "linen",
+    "pattern": "solid",
+    "fit": "relaxed",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "beach",
+      "casual",
+      "travel"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Olive Green Utility Polo",
+    "category": "Polo",
+    "primary_color": "olive",
+    "image_url": "/uploads/seed_item_7_olive_polo.jpg",
+    "style": "smart_casual",
+    "formality": 4,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "college",
+      "outing",
+      "sports"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Burgundy Heavy Cotton Hoodie",
+    "category": "Hoodie",
+    "primary_color": "burgundy",
+    "image_url": "/uploads/seed_item_8_burgundy_hoodie.jpg",
+    "style": "streetwear",
+    "formality": 2,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "relaxed",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "college",
+      "travel"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Charcoal Grey Knit Sweater",
+    "category": "Sweater",
+    "primary_color": "grey",
+    "image_url": "/uploads/seed_item_9_grey_sweater.jpg",
+    "style": "smart_casual",
+    "formality": 5,
+    "material": "wool",
+    "pattern": "knit",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "dinner",
+      "date"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "White Striped Summer Polo",
+    "category": "Polo",
+    "primary_color": "white",
+    "image_url": "/uploads/seed_item_10_white_polo.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "cotton",
+    "pattern": "striped",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "outing"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Red Flannel Checked Shirt",
+    "category": "Shirt",
+    "primary_color": "red",
+    "image_url": "/uploads/seed_item_11_red_shirt.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "cotton",
+    "pattern": "plaid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "travel"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Brown Cable Knit Sweater",
+    "category": "Sweater",
+    "primary_color": "brown",
+    "image_url": "/uploads/seed_item_12_brown_sweater.jpg",
+    "style": "casual",
+    "formality": 4,
+    "material": "wool",
+    "pattern": "knit",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "outing"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Pink Linen Casual Shirt",
+    "category": "Shirt",
+    "primary_color": "pink",
+    "image_url": "/uploads/seed_item_13_pink_shirt.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "linen",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "date",
+      "beach",
+      "party"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Yellow Graphic Oversized Tee",
+    "category": "T-Shirt",
+    "primary_color": "yellow",
+    "image_url": "/uploads/seed_item_14_yellow_t-shirt.jpg",
+    "style": "streetwear",
+    "formality": 2,
+    "material": "cotton",
+    "pattern": "printed",
+    "fit": "oversized",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "party",
+      "casual"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Navy Crewneck Basic Tee",
+    "category": "T-Shirt",
+    "primary_color": "navy",
+    "image_url": "/uploads/seed_item_15_navy_t-shirt.jpg",
+    "style": "casual",
+    "formality": 2,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "college"
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Black Turtleneck Sweater",
+    "category": "Sweater",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_16_black_sweater.jpg",
+    "style": "formal",
+    "formality": 7,
+    "material": "wool",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "dinner",
+      "formal event",
+      "date"
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Beige Oversized Hoodie",
+    "category": "Hoodie",
+    "primary_color": "beige",
+    "image_url": "/uploads/seed_item_17_beige_hoodie.jpg",
+    "style": "casual",
+    "formality": 2,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "oversized",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "travel"
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Green Printed Hawaiian Shirt",
+    "category": "Shirt",
+    "primary_color": "green",
+    "image_url": "/uploads/seed_item_18_green_shirt.jpg",
+    "style": "casual",
+    "formality": 2,
+    "material": "rayon",
+    "pattern": "printed",
+    "fit": "relaxed",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "beach",
+      "party",
+      "travel"
+    ]
+  },
+  {
+    "id": 19,
+    "title": "White Formal Dress Shirt",
+    "category": "Shirt",
+    "primary_color": "white",
+    "image_url": "/uploads/seed_item_19_white_shirt.jpg",
+    "style": "formal",
+    "formality": 9,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "interview",
+      "wedding",
+      "office"
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Traditional Embroidered Kurta",
+    "category": "Kurta",
+    "primary_color": "beige",
+    "image_url": "/uploads/seed_item_20_beige_kurta.jpg",
+    "style": "traditional",
+    "formality": 7,
+    "material": "cotton",
+    "pattern": "embroidered",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "traditional event",
+      "wedding"
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Dark Blue Slim Fit Jeans",
+    "category": "Jeans",
+    "primary_color": "blue",
+    "image_url": "/uploads/seed_item_21_blue_jeans.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "denim",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "college",
+      "outing"
+    ]
+  },
+  {
+    "id": 22,
+    "title": "Classic Black Denim Pants",
+    "category": "Jeans",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_22_black_jeans.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "denim",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "party",
+      "college"
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Beige Slim Chino Trousers",
+    "category": "Pants",
+    "primary_color": "beige",
+    "image_url": "/uploads/seed_item_23_beige_pants.jpg",
+    "style": "smart_casual",
+    "formality": 5,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "date",
+      "casual"
+    ]
+  },
+  {
+    "id": 24,
+    "title": "Navy Blue Tailored Trousers",
+    "category": "Trousers",
+    "primary_color": "navy",
+    "image_url": "/uploads/seed_item_24_navy_trousers.jpg",
+    "style": "formal",
+    "formality": 8,
+    "material": "wool",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "interview",
+      "wedding"
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Charcoal Grey Dress Pants",
+    "category": "Trousers",
+    "primary_color": "grey",
+    "image_url": "/uploads/seed_item_25_grey_trousers.jpg",
+    "style": "formal",
+    "formality": 8,
+    "material": "wool",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "interview",
+      "formal event"
+    ]
+  },
+  {
+    "id": 26,
+    "title": "Olive Cargo Utility Pants",
+    "category": "Pants",
+    "primary_color": "olive",
+    "image_url": "/uploads/seed_item_26_olive_pants.jpg",
+    "style": "streetwear",
+    "formality": 2,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "relaxed",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "travel",
+      "outing"
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Light Blue Distressed Jeans",
+    "category": "Jeans",
+    "primary_color": "light blue",
+    "image_url": "/uploads/seed_item_27_light blue_jeans.jpg",
+    "style": "streetwear",
+    "formality": 2,
+    "material": "denim",
+    "pattern": "distressed",
+    "fit": "relaxed",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "party",
+      "casual"
+    ]
+  },
+  {
+    "id": 28,
+    "title": "Khaki Casual Shorts",
+    "category": "Shorts",
+    "primary_color": "beige",
+    "image_url": "/uploads/seed_item_28_beige_shorts.jpg",
+    "style": "casual",
+    "formality": 2,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "beach",
+      "casual",
+      "sports"
+    ]
+  },
+  {
+    "id": 29,
+    "title": "Black Athletic Sweatpants",
+    "category": "Pants",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_29_black_pants.jpg",
+    "style": "athletic",
+    "formality": 1,
+    "material": "synthetic",
+    "pattern": "solid",
+    "fit": "relaxed",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "gym",
+      "travel",
+      "casual"
+    ]
+  },
+  {
+    "id": 30,
+    "title": "Brown Corduroy Trousers",
+    "category": "Pants",
+    "primary_color": "brown",
+    "image_url": "/uploads/seed_item_30_brown_pants.jpg",
+    "style": "casual",
+    "formality": 4,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "outing"
+    ]
+  },
+  {
+    "id": 31,
+    "title": "Grey Tailored Linen Pants",
+    "category": "Pants",
+    "primary_color": "grey",
+    "image_url": "/uploads/seed_item_31_grey_pants.jpg",
+    "style": "casual",
+    "formality": 4,
+    "material": "linen",
+    "pattern": "solid",
+    "fit": "relaxed",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "beach",
+      "date",
+      "casual"
+    ]
+  },
+  {
+    "id": 32,
+    "title": "White Slim Chinos",
+    "category": "Pants",
+    "primary_color": "white",
+    "image_url": "/uploads/seed_item_32_white_pants.jpg",
+    "style": "smart_casual",
+    "formality": 5,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "party",
+      "date",
+      "casual"
+    ]
+  },
+  {
+    "id": 33,
+    "title": "Navy Athletic Running Shorts",
+    "category": "Shorts",
+    "primary_color": "navy",
+    "image_url": "/uploads/seed_item_33_navy_shorts.jpg",
+    "style": "athletic",
+    "formality": 1,
+    "material": "synthetic",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "gym",
+      "sports"
+    ]
+  },
+  {
+    "id": 34,
+    "title": "Dark Grey Stretch Jeans",
+    "category": "Jeans",
+    "primary_color": "grey",
+    "image_url": "/uploads/seed_item_34_grey_jeans.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "denim",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "college",
+      "casual"
+    ]
+  },
+  {
+    "id": 35,
+    "title": "Olive Chino Trousers",
+    "category": "Pants",
+    "primary_color": "olive",
+    "image_url": "/uploads/seed_item_35_olive_pants.jpg",
+    "style": "smart_casual",
+    "formality": 5,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "outing"
+    ]
+  },
+  {
+    "id": 36,
+    "title": "Black Tailored Tuxedo Pants",
+    "category": "Trousers",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_36_black_trousers.jpg",
+    "style": "formal",
+    "formality": 10,
+    "material": "wool",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "wedding",
+      "formal event"
+    ]
+  },
+  {
+    "id": 37,
+    "title": "Beige Linen Drawstring Shorts",
+    "category": "Shorts",
+    "primary_color": "beige",
+    "image_url": "/uploads/seed_item_37_beige_shorts.jpg",
+    "style": "casual",
+    "formality": 2,
+    "material": "linen",
+    "pattern": "solid",
+    "fit": "relaxed",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "beach",
+      "travel"
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Burgundy Casual Chinos",
+    "category": "Pants",
+    "primary_color": "burgundy",
+    "image_url": "/uploads/seed_item_38_burgundy_pants.jpg",
+    "style": "casual",
+    "formality": 4,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "party",
+      "date"
+    ]
+  },
+  {
+    "id": 39,
+    "title": "Green Army Cargo Shorts",
+    "category": "Shorts",
+    "primary_color": "green",
+    "image_url": "/uploads/seed_item_39_green_shorts.jpg",
+    "style": "casual",
+    "formality": 2,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "relaxed",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "travel",
+      "casual"
+    ]
+  },
+  {
+    "id": 40,
+    "title": "Raw Indigo Denim Jeans",
+    "category": "Jeans",
+    "primary_color": "navy",
+    "image_url": "/uploads/seed_item_40_navy_jeans.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "denim",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "college"
+    ]
+  },
+  {
+    "id": 41,
+    "title": "Classic Minimalist White Sneakers",
+    "category": "Sneakers",
+    "primary_color": "white",
+    "image_url": "/uploads/seed_item_41_white_sneakers.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "college",
+      "outing",
+      "travel"
+    ]
+  },
+  {
+    "id": 42,
+    "title": "Black Leather Oxford Dress Shoes",
+    "category": "Shoes",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_42_black_shoes.jpg",
+    "style": "formal",
+    "formality": 9,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "interview",
+      "wedding",
+      "office",
+      "formal event"
+    ]
+  },
+  {
+    "id": 43,
+    "title": "Brown Suede Chelsea Boots",
+    "category": "Boots",
+    "primary_color": "brown",
+    "image_url": "/uploads/seed_item_43_brown_boots.jpg",
+    "style": "smart_casual",
+    "formality": 6,
+    "material": "suede",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "date",
+      "dinner",
+      "casual"
+    ]
+  },
+  {
+    "id": 44,
+    "title": "Navy Canvas Skate Sneakers",
+    "category": "Sneakers",
+    "primary_color": "navy",
+    "image_url": "/uploads/seed_item_44_navy_sneakers.jpg",
+    "style": "streetwear",
+    "formality": 2,
+    "material": "canvas",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "college"
+    ]
+  },
+  {
+    "id": 45,
+    "title": "Black Athletic Running Shoes",
+    "category": "Sneakers",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_45_black_sneakers.jpg",
+    "style": "athletic",
+    "formality": 1,
+    "material": "synthetic",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "gym",
+      "sports",
+      "travel"
+    ]
+  },
+  {
+    "id": 46,
+    "title": "Tan Leather Derby Shoes",
+    "category": "Shoes",
+    "primary_color": "beige",
+    "image_url": "/uploads/seed_item_46_beige_shoes.jpg",
+    "style": "smart_casual",
+    "formality": 7,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "dinner",
+      "date"
+    ]
+  },
+  {
+    "id": 47,
+    "title": "Grey Slip-On Canvas Shoes",
+    "category": "Sneakers",
+    "primary_color": "grey",
+    "image_url": "/uploads/seed_item_47_grey_sneakers.jpg",
+    "style": "casual",
+    "formality": 2,
+    "material": "canvas",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "beach"
+    ]
+  },
+  {
+    "id": 48,
+    "title": "Brown Leather Casual Loafers",
+    "category": "Shoes",
+    "primary_color": "brown",
+    "image_url": "/uploads/seed_item_48_brown_shoes.jpg",
+    "style": "smart_casual",
+    "formality": 6,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "party",
+      "date",
+      "outing"
+    ]
+  },
+  {
+    "id": 49,
+    "title": "Black Leather Combat Boots",
+    "category": "Boots",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_49_black_boots.jpg",
+    "style": "streetwear",
+    "formality": 4,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "party",
+      "casual"
+    ]
+  },
+  {
+    "id": 50,
+    "title": "Beige Leather Casual Sandals",
+    "category": "Sandals",
+    "primary_color": "beige",
+    "image_url": "/uploads/seed_item_50_beige_sandals.jpg",
+    "style": "casual",
+    "formality": 1,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "beach",
+      "casual"
+    ]
+  },
+  {
+    "id": 51,
+    "title": "Classic Blue Denim Jacket",
+    "category": "Jacket",
+    "primary_color": "blue",
+    "image_url": "/uploads/seed_item_51_blue_jacket.jpg",
+    "style": "casual",
+    "formality": 4,
+    "material": "denim",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "college",
+      "outing"
+    ]
+  },
+  {
+    "id": 52,
+    "title": "Black Leather Biker Jacket",
+    "category": "Jacket",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_52_black_jacket.jpg",
+    "style": "streetwear",
+    "formality": 5,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "slim",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "party",
+      "date",
+      "casual"
+    ]
+  },
+  {
+    "id": 53,
+    "title": "Charcoal Wool Overcoat",
+    "category": "Coat",
+    "primary_color": "grey",
+    "image_url": "/uploads/seed_item_53_grey_coat.jpg",
+    "style": "formal",
+    "formality": 9,
+    "material": "wool",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "formal event",
+      "interview"
+    ]
+  },
+  {
+    "id": 54,
+    "title": "Beige Cotton Trench Coat",
+    "category": "Coat",
+    "primary_color": "beige",
+    "image_url": "/uploads/seed_item_54_beige_coat.jpg",
+    "style": "smart_casual",
+    "formality": 7,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "travel",
+      "dinner"
+    ]
+  },
+  {
+    "id": 55,
+    "title": "Olive Green Bomber Jacket",
+    "category": "Jacket",
+    "primary_color": "olive",
+    "image_url": "/uploads/seed_item_55_olive_jacket.jpg",
+    "style": "casual",
+    "formality": 4,
+    "material": "synthetic",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "outing",
+      "college"
+    ]
+  },
+  {
+    "id": 56,
+    "title": "Silver Minimalist Analog Watch",
+    "category": "Watch",
+    "primary_color": "white",
+    "image_url": "/uploads/seed_item_56_white_watch.jpg",
+    "style": "smart_casual",
+    "formality": 6,
+    "material": "metal",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "date",
+      "casual"
+    ]
+  },
+  {
+    "id": 57,
+    "title": "Black Leather Strap Dress Watch",
+    "category": "Watch",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_57_black_watch.jpg",
+    "style": "formal",
+    "formality": 9,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "interview",
+      "wedding",
+      "formal event"
+    ]
+  },
+  {
+    "id": 58,
+    "title": "Brown Leather Vintage Watch",
+    "category": "Watch",
+    "primary_color": "brown",
+    "image_url": "/uploads/seed_item_58_brown_watch.jpg",
+    "style": "casual",
+    "formality": 5,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "outing",
+      "college"
+    ]
+  },
+  {
+    "id": 59,
+    "title": "Gold Classic Executive Watch",
+    "category": "Watch",
+    "primary_color": "yellow",
+    "image_url": "/uploads/seed_item_59_yellow_watch.jpg",
+    "style": "formal",
+    "formality": 9,
+    "material": "gold",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "wedding",
+      "dinner"
+    ]
+  },
+  {
+    "id": 60,
+    "title": "Black Digital Sport Watch",
+    "category": "Watch",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_60_black_watch.jpg",
+    "style": "athletic",
+    "formality": 1,
+    "material": "rubber",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "gym",
+      "sports",
+      "travel"
+    ]
+  },
+  {
+    "id": 61,
+    "title": "Black Genuine Leather Belt",
+    "category": "Belt",
+    "primary_color": "black",
+    "image_url": "/uploads/seed_item_61_black_belt.jpg",
+    "style": "formal",
+    "formality": 8,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "interview",
+      "wedding"
+    ]
+  },
+  {
+    "id": 62,
+    "title": "Brown Casual Leather Belt",
+    "category": "Belt",
+    "primary_color": "brown",
+    "image_url": "/uploads/seed_item_62_brown_belt.jpg",
+    "style": "casual",
+    "formality": 4,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "college",
+      "outing"
+    ]
+  },
+  {
+    "id": 63,
+    "title": "Navy Braided Canvas Belt",
+    "category": "Belt",
+    "primary_color": "navy",
+    "image_url": "/uploads/seed_item_63_navy_belt.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "canvas",
+    "pattern": "braided",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "beach"
+    ]
+  },
+  {
+    "id": 64,
+    "title": "Tan Leather Dress Belt",
+    "category": "Belt",
+    "primary_color": "beige",
+    "image_url": "/uploads/seed_item_64_beige_belt.jpg",
+    "style": "smart_casual",
+    "formality": 6,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "office",
+      "date"
+    ]
+  },
+  {
+    "id": 65,
+    "title": "Dark Grey Reversible Belt",
+    "category": "Belt",
+    "primary_color": "grey",
+    "image_url": "/uploads/seed_item_65_grey_belt.jpg",
+    "style": "casual",
+    "formality": 4,
+    "material": "leather",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "office"
+    ]
+  },
+  {
+    "id": 66,
+    "title": "Batch Test Glasses",
+    "category": "Glasses",
+    "primary_color": "black",
+    "image_url": "/uploads/test_g.jpg",
+    "style": "casual",
+    "formality": 3,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "college",
+      "outing"
+    ]
+  },
+  {
+    "id": 67,
+    "title": "Batch Test Watch",
+    "category": "Watch",
+    "primary_color": "brown",
+    "image_url": "/uploads/test_w.jpg",
+    "style": "casual",
+    "formality": 4,
+    "material": "cotton",
+    "pattern": "solid",
+    "fit": "regular",
+    "seasons": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "occasions": [
+      "casual",
+      "college",
+      "outing"
+    ]
+  }
+]

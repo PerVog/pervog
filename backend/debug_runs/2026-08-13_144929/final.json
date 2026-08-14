@@ -1,0 +1,644 @@
+{
+  "overall_outfit": {
+    "outfit_type": "outfit combo",
+    "style": "casual",
+    "formality": 3,
+    "occasion": [
+      "casual"
+    ],
+    "confidence": 0.9
+  },
+  "items": [
+    {
+      "region_id": "region_1",
+      "bbox": [
+        61,
+        11,
+        92,
+        72
+      ],
+      "item_type": {
+        "value": "jeans",
+        "confidence": 0.63
+      },
+      "category": "lower_body",
+      "display_name": "Jeans",
+      "color": {
+        "primary": "grey",
+        "secondary": [
+          "light grey",
+          "dark grey"
+        ],
+        "dominant_colors": [
+          {
+            "name": "grey",
+            "rgb": [
+              128,
+              128,
+              128
+            ],
+            "percentage": 40.9
+          },
+          {
+            "name": "light grey",
+            "rgb": [
+              200,
+              200,
+              200
+            ],
+            "percentage": 33.7
+          },
+          {
+            "name": "dark grey",
+            "rgb": [
+              70,
+              70,
+              70
+            ],
+            "percentage": 25.4
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "lower_body",
+        "confidence": 0.63
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 3,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "formal_trousers",
+          "score": 0.3886
+        },
+        "grounding_dino": {
+          "labels": [
+            "clothing item",
+            "jeans",
+            "jeans"
+          ],
+          "models": [
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "loose_pants",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.63
+    },
+    {
+      "region_id": "region_2",
+      "bbox": [
+        26,
+        15,
+        151,
+        210
+      ],
+      "item_type": {
+        "value": "derby_shoes",
+        "confidence": 0.93
+      },
+      "category": "footwear",
+      "display_name": "Derby Shoes",
+      "color": {
+        "primary": "black",
+        "secondary": [
+          "charcoal"
+        ],
+        "dominant_colors": [
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 53.0
+          },
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 46.2
+          },
+          {
+            "name": "grey",
+            "rgb": [
+              128,
+              128,
+              128
+            ],
+            "percentage": 0.8
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "footwear",
+        "confidence": 0.93
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 8,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "derby_shoes",
+          "score": 0.3942
+        },
+        "grounding_dino": {
+          "labels": [
+            "Derby shoes",
+            "formal shoes",
+            "clothing item",
+            "watch",
+            "joggers",
+            "jacket or shirt",
+            "long_sleeve_outwear"
+          ],
+          "models": [
+            "grounding_dino",
+            "florence",
+            "deepfashion2"
+          ]
+        },
+        "qwen": {
+          "item_type": "sandals",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": false,
+      "confidence": 0.93
+    },
+    {
+      "region_id": "region_3",
+      "bbox": [
+        34,
+        174,
+        146,
+        347
+      ],
+      "item_type": {
+        "value": "formal_trousers",
+        "confidence": 0.84
+      },
+      "category": "lower_body",
+      "display_name": "Formal Trousers",
+      "color": {
+        "primary": "black",
+        "secondary": [
+          "charcoal"
+        ],
+        "dominant_colors": [
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 65.5
+          },
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 32.1
+          },
+          {
+            "name": "dark grey",
+            "rgb": [
+              70,
+              70,
+              70
+            ],
+            "percentage": 2.3
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "lower_body",
+        "confidence": 0.84
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 8,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "formal_trousers",
+          "score": 0.2615
+        },
+        "grounding_dino": {
+          "labels": [
+            "tie",
+            "glasses",
+            "clothing item",
+            "pants or trousers",
+            "trousers"
+          ],
+          "models": [
+            "grounding_dino",
+            "florence",
+            "deepfashion2"
+          ]
+        },
+        "qwen": {
+          "item_type": "loose_pants",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.84
+    },
+    {
+      "region_id": "region_4",
+      "bbox": [
+        40,
+        176,
+        87,
+        344
+      ],
+      "item_type": {
+        "value": "suit_trousers",
+        "confidence": 0.55
+      },
+      "category": "lower_body",
+      "display_name": "Suit Trousers",
+      "color": {
+        "primary": "black",
+        "secondary": [
+          "black"
+        ],
+        "dominant_colors": [
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 52.4
+          },
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 45.7
+          },
+          {
+            "name": "dark grey",
+            "rgb": [
+              70,
+              70,
+              70
+            ],
+            "percentage": 1.9
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "lower_body",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 9,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "suit_trousers",
+          "score": 0.2897
+        },
+        "grounding_dino": {
+          "labels": [
+            "clothing item"
+          ],
+          "models": [
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "loose_pants",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    },
+    {
+      "region_id": "region_5",
+      "bbox": [
+        46,
+        341,
+        91,
+        377
+      ],
+      "item_type": {
+        "value": "formal_shoes",
+        "confidence": 0.55
+      },
+      "category": "footwear",
+      "display_name": "Formal Shoes",
+      "color": {
+        "primary": "charcoal",
+        "secondary": [
+          "charcoal"
+        ],
+        "dominant_colors": [
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 64.1
+          },
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 24.5
+          },
+          {
+            "name": "grey",
+            "rgb": [
+              128,
+              128,
+              128
+            ],
+            "percentage": 11.4
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "footwear",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 9,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "formal_shoes",
+          "score": 0.3182
+        },
+        "grounding_dino": {
+          "labels": [
+            "clothing item",
+            "clothing item"
+          ],
+          "models": [
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "sandals",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    },
+    {
+      "region_id": "region_6",
+      "bbox": [
+        43,
+        342,
+        142,
+        392
+      ],
+      "item_type": {
+        "value": "formal_shoes",
+        "confidence": 0.57
+      },
+      "category": "footwear",
+      "display_name": "Formal Shoes",
+      "color": {
+        "primary": "charcoal",
+        "secondary": [
+          "charcoal"
+        ],
+        "dominant_colors": [
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 60.7
+          },
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 26.4
+          },
+          {
+            "name": "grey",
+            "rgb": [
+              128,
+              128,
+              128
+            ],
+            "percentage": 12.9
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "footwear",
+        "confidence": 0.57
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 9,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "boots",
+          "score": 0.5561
+        },
+        "grounding_dino": {
+          "labels": [
+            "clothing item",
+            "clothing item",
+            "shoes"
+          ],
+          "models": [
+            "grounding_dino",
+            "florence"
+          ]
+        },
+        "qwen": {
+          "item_type": "sandals",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.57
+    },
+    {
+      "region_id": "region_7",
+      "bbox": [
+        114,
+        359,
+        143,
+        396
+      ],
+      "item_type": {
+        "value": "sandals",
+        "confidence": 0.55
+      },
+      "category": "footwear",
+      "display_name": "Sandals",
+      "color": {
+        "primary": "charcoal",
+        "secondary": [
+          "dark grey"
+        ],
+        "dominant_colors": [
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 64.6
+          },
+          {
+            "name": "dark grey",
+            "rgb": [
+              70,
+              70,
+              70
+            ],
+            "percentage": 24.1
+          },
+          {
+            "name": "grey",
+            "rgb": [
+              128,
+              128,
+              128
+            ],
+            "percentage": 11.2
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "footwear",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 2,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "boots",
+          "score": 0.7641
+        },
+        "grounding_dino": {
+          "labels": [
+            "clothing item",
+            "clothing item"
+          ],
+          "models": [
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "sandals",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    }
+  ]
+}

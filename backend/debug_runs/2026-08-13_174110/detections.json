@@ -1,0 +1,57 @@
+[
+  {
+    "model": "florence_2",
+    "label": "jacket or shirt",
+    "box": [
+      24,
+      6,
+      126,
+      73
+    ],
+    "score": 0.89
+  },
+  {
+    "model": "florence_2",
+    "label": "pants or trousers",
+    "box": [
+      28,
+      69,
+      121,
+      127
+    ],
+    "score": 0.86
+  },
+  {
+    "model": "florence_2",
+    "label": "shoes",
+    "box": [
+      33,
+      129,
+      117,
+      145
+    ],
+    "score": 0.85
+  },
+  {
+    "model": "deepfashion2",
+    "label": "long_sleeve_outwear",
+    "box": [
+      22,
+      7,
+      127,
+      72
+    ],
+    "score": 0.91
+  },
+  {
+    "model": "deepfashion2",
+    "label": "trousers",
+    "box": [
+      27,
+      67,
+      122,
+      129
+    ],
+    "score": 0.9
+  }
+]

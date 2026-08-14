@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./stylist.db
+      - AI_PROVIDER=local
+      - STORAGE_TYPE=local
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./backend/stylist.db:/app/stylist.db
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

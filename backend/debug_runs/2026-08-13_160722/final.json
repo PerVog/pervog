@@ -1,0 +1,323 @@
+{
+  "analysis_id": "2ee1f42a",
+  "overall_outfit": {
+    "outfit_type": "outfit combo",
+    "style": "casual",
+    "formality": 3,
+    "occasion": [
+      "casual"
+    ],
+    "confidence": 0.9
+  },
+  "items": [
+    {
+      "region_id": "region_1",
+      "bbox": [
+        15,
+        4,
+        84,
+        48
+      ],
+      "crop_hash": "6c5437e7f1d56cc4575ae7c2c664737de1b9ef739e466a16aa71bc1e109f7044",
+      "image_url": "/storage/crops/analysis_2ee1f42a_region_1.png",
+      "mask_url": "/storage/masks/analysis_2ee1f42a_region_1.png",
+      "item_type": {
+        "value": "casual_shirt",
+        "confidence": 0.64
+      },
+      "category": "upper_body",
+      "display_name": "Casual Shirt",
+      "color": {
+        "primary": "brown",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "brown",
+            "rgb": [
+              110,
+              65,
+              35
+            ],
+            "percentage": 100.0
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "upper_body",
+        "confidence": 0.64
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.8
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "garment_attributes": {
+        "attributes": [
+          {
+            "attribute": "patch (pocket)",
+            "score": 0.5321
+          },
+          {
+            "attribute": "wrist-length",
+            "score": 0.0628
+          },
+          {
+            "attribute": "welt (pocket)",
+            "score": 0.057
+          },
+          {
+            "attribute": "kangaroo (pocket)",
+            "score": 0.0383
+          },
+          {
+            "attribute": "set-in sleeve",
+            "score": 0.036
+          }
+        ],
+        "top_attribute": "patch (pocket)"
+      },
+      "formality": {
+        "value": 4,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "t_shirt",
+          "score": 0.2768
+        },
+        "grounding_dino": {
+          "labels": [
+            {
+              "type": "casual_shirt",
+              "score": 0.91,
+              "raw_label": "long_sleeve_outwear"
+            },
+            {
+              "type": "casual_shirt",
+              "score": 0.89,
+              "raw_label": "jacket or shirt"
+            }
+          ],
+          "models": [
+            "florence_2",
+            "deepfashion2"
+          ]
+        },
+        "qwen": {
+          "item_type": "suit_jacket",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.64
+    },
+    {
+      "region_id": "region_2",
+      "bbox": [
+        18,
+        45,
+        81,
+        85
+      ],
+      "crop_hash": "535a69131e3d7c0ab9852641dfa775674f917eb1eef8ca4232e0623309f0fdb1",
+      "image_url": "/storage/crops/analysis_2ee1f42a_region_2.png",
+      "mask_url": "/storage/masks/analysis_2ee1f42a_region_2.png",
+      "item_type": {
+        "value": "suit_trousers",
+        "confidence": 0.93
+      },
+      "category": "lower_body",
+      "display_name": "Suit Trousers",
+      "color": {
+        "primary": "brown",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "brown",
+            "rgb": [
+              110,
+              65,
+              35
+            ],
+            "percentage": 100.0
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "lower_body",
+        "confidence": 0.93
+      },
+      "fit": {
+        "value": "relaxed",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "garment_attributes": {
+        "attributes": [
+          {
+            "attribute": "patch (pocket)",
+            "score": 0.3414
+          },
+          {
+            "attribute": "slash (pocket)",
+            "score": 0.22
+          },
+          {
+            "attribute": "welt (pocket)",
+            "score": 0.1262
+          },
+          {
+            "attribute": "flap (pocket)",
+            "score": 0.059
+          },
+          {
+            "attribute": "set-in sleeve",
+            "score": 0.0118
+          }
+        ],
+        "top_attribute": "patch (pocket)"
+      },
+      "formality": {
+        "value": 9,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "suit_trousers",
+          "score": 0.269
+        },
+        "grounding_dino": {
+          "labels": [
+            {
+              "type": "formal_trousers",
+              "score": 0.9,
+              "raw_label": "trousers"
+            },
+            {
+              "type": "loose_pants",
+              "score": 0.86,
+              "raw_label": "pants or trousers"
+            }
+          ],
+          "models": [
+            "florence_2",
+            "deepfashion2"
+          ]
+        },
+        "qwen": {
+          "item_type": "suit_trousers",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.93
+    },
+    {
+      "region_id": "region_3",
+      "bbox": [
+        22,
+        86,
+        78,
+        97
+      ],
+      "crop_hash": "93fcaae07095a899831d1f4465b737de65462f3327e9e26e1f967c740b606e3c",
+      "image_url": "/storage/crops/analysis_2ee1f42a_region_3.png",
+      "mask_url": "/storage/masks/analysis_2ee1f42a_region_3.png",
+      "item_type": {
+        "value": "formal_shoes",
+        "confidence": 0.55
+      },
+      "category": "footwear",
+      "display_name": "Formal Shoes",
+      "color": {
+        "primary": "brown",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "brown",
+            "rgb": [
+              110,
+              65,
+              35
+            ],
+            "percentage": 100.0
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "Footwear",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.8
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "garment_attributes": {
+        "attributes": [
+          {
+            "attribute": "patch (pocket)",
+            "score": 0.1921
+          },
+          {
+            "attribute": "welt (pocket)",
+            "score": 0.1001
+          },
+          {
+            "attribute": "slash (pocket)",
+            "score": 0.073
+          },
+          {
+            "attribute": "set-in sleeve",
+            "score": 0.0523
+          },
+          {
+            "attribute": "wrist-length",
+            "score": 0.0508
+          }
+        ],
+        "top_attribute": "patch (pocket)"
+      },
+      "formality": {
+        "value": 9,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "derby_shoes",
+          "score": 0.2574
+        },
+        "grounding_dino": {
+          "labels": [
+            {
+              "type": "formal_shoes",
+              "score": 0.85,
+              "raw_label": "shoes"
+            }
+          ],
+          "models": [
+            "florence_2"
+          ]
+        },
+        "qwen": {
+          "item_type": "formal_shoes",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    }
+  ]
+}

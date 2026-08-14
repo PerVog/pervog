@@ -1,0 +1,277 @@
+{
+  "overall_outfit": {
+    "outfit_type": "outfit combo",
+    "style": "casual",
+    "formality": 4,
+    "occasion": [
+      "casual"
+    ],
+    "confidence": 0.9
+  },
+  "items": [
+    {
+      "region_id": "region_1",
+      "bbox": [
+        49,
+        28,
+        250,
+        348
+      ],
+      "item_type": {
+        "value": "suit_trousers",
+        "confidence": 0.93
+      },
+      "category": "lower_body",
+      "display_name": "Suit Trousers",
+      "color": {
+        "primary": "black",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 96.5
+          },
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 2.1
+          },
+          {
+            "name": "white",
+            "rgb": [
+              250,
+              250,
+              250
+            ],
+            "percentage": 1.4
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "lower_body",
+        "confidence": 0.93
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 9,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "suit_trousers",
+          "score": 0.2815
+        },
+        "grounding_dino": {
+          "labels": [
+            "casual shirt",
+            "wide leg pants",
+            "jacket or shirt",
+            "long_sleeve_outwear"
+          ],
+          "models": [
+            "grounding_dino",
+            "florence",
+            "deepfashion2"
+          ]
+        },
+        "qwen": {
+          "item_type": "suit_trousers",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": false,
+      "confidence": 0.93
+    },
+    {
+      "region_id": "region_2",
+      "bbox": [
+        55,
+        273,
+        244,
+        513
+      ],
+      "item_type": {
+        "value": "jeans",
+        "confidence": 0.55
+      },
+      "category": "lower_body",
+      "display_name": "Jeans",
+      "color": {
+        "primary": "black",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 97.8
+          },
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 1.9
+          },
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 0.4
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "lower_body",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 3,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "jeans",
+          "score": 0.4057
+        },
+        "grounding_dino": {
+          "labels": [
+            "pants or trousers",
+            "trousers"
+          ],
+          "models": [
+            "florence",
+            "deepfashion2"
+          ]
+        },
+        "qwen": {
+          "item_type": "suit_trousers",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    },
+    {
+      "region_id": "region_3",
+      "bbox": [
+        70,
+        513,
+        229,
+        581
+      ],
+      "item_type": {
+        "value": "formal_shoes",
+        "confidence": 0.98
+      },
+      "category": "footwear",
+      "display_name": "Formal Shoes",
+      "color": {
+        "primary": "dark brown",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "dark brown",
+            "rgb": [
+              70,
+              40,
+              20
+            ],
+            "percentage": 92.0
+          },
+          {
+            "name": "dark brown",
+            "rgb": [
+              70,
+              40,
+              20
+            ],
+            "percentage": 6.3
+          },
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 1.7
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "footwear",
+        "confidence": 0.98
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "formality": {
+        "value": 9,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "formal_shoes",
+          "score": 0.1989
+        },
+        "grounding_dino": {
+          "labels": [
+            "clothing item",
+            "shoes"
+          ],
+          "models": [
+            "grounding_dino",
+            "florence"
+          ]
+        },
+        "qwen": {
+          "item_type": "formal_shoes",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": false,
+      "confidence": 0.98
+    }
+  ]
+}

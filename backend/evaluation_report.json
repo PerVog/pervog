@@ -1,0 +1,17 @@
+{
+  "total_test_samples": 40,
+  "total_items_evaluated": 120,
+  "item_category_accuracy": 91.67,
+  "footwear_category_accuracy": 33.33,
+  "color_accuracy": 75.0,
+  "style_accuracy": 50.0,
+  "formality_accuracy": 50.0,
+  "suit_detection_accuracy": 75.0,
+  "targets_met": {
+    "category_gt_90": true,
+    "footwear_gt_90": false,
+    "color_gt_90": false,
+    "style_gt_80": false,
+    "formality_gt_80": false
+  }
+}

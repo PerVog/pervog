@@ -1,0 +1,53 @@
+{
+  "models_benchmarked": {
+    "grounding_dino": "available",
+    "florence_2": "fallback",
+    "deepfashion2": "available",
+    "sam2_1": "available",
+    "fashionclip": "available",
+    "qwen2_5_vl": "fallback",
+    "garment_attributes": "available",
+    "footwear_classifier": "available"
+  },
+  "detection_models": {
+    "grounding_dino": {
+      "status": "available",
+      "open_vocabulary": true,
+      "speed_score": 0.85
+    },
+    "florence_2_large": {
+      "status": "fallback",
+      "phrase_grounding": true,
+      "speed_score": 0.8
+    },
+    "deepfashion2": {
+      "status": "available",
+      "clothing_specific": true,
+      "speed_score": 0.9
+    }
+  },
+  "segmentation_models": {
+    "sam2_1": {
+      "status": "available",
+      "precision": 0.95
+    }
+  },
+  "classification_models": {
+    "fashionclip": {
+      "status": "available",
+      "zero_shot_ranking": true
+    },
+    "qwen2_5_vl": {
+      "status": "fallback",
+      "context_reasoning": true
+    },
+    "garment_attributes": {
+      "status": "available",
+      "fine_grained": true
+    },
+    "footwear_classifier": {
+      "status": "available",
+      "specialized": true
+    }
+  }
+}

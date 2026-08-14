@@ -1,0 +1,79 @@
+[
+  {
+    "model": "grounding_dino",
+    "label": "casual shirt",
+    "box": [
+      68,
+      267,
+      231,
+      521
+    ],
+    "score": 0.2833
+  },
+  {
+    "model": "grounding_dino",
+    "label": "wide leg pants",
+    "box": [
+      69,
+      266,
+      231,
+      521
+    ],
+    "score": 0.2563
+  },
+  {
+    "model": "florence_2",
+    "label": "jacket or shirt",
+    "box": [
+      48,
+      24,
+      252,
+      294
+    ],
+    "score": 0.89
+  },
+  {
+    "model": "florence_2",
+    "label": "pants or trousers",
+    "box": [
+      57,
+      276,
+      243,
+      510
+    ],
+    "score": 0.86
+  },
+  {
+    "model": "florence_2",
+    "label": "shoes",
+    "box": [
+      66,
+      516,
+      234,
+      582
+    ],
+    "score": 0.85
+  },
+  {
+    "model": "deepfashion2",
+    "label": "long_sleeve_outwear",
+    "box": [
+      45,
+      30,
+      255,
+      288
+    ],
+    "score": 0.91
+  },
+  {
+    "model": "deepfashion2",
+    "label": "trousers",
+    "box": [
+      54,
+      270,
+      245,
+      516
+    ],
+    "score": 0.9
+  }
+]

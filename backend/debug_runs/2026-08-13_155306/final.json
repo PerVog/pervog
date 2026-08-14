@@ -1,0 +1,409 @@
+{
+  "analysis_id": "e3ba8ef4",
+  "overall_outfit": {
+    "outfit_type": "outfit combo",
+    "style": "casual",
+    "formality": 3,
+    "occasion": [
+      "casual"
+    ],
+    "confidence": 0.9
+  },
+  "items": [
+    {
+      "region_id": "region_1",
+      "bbox": [
+        54,
+        28,
+        246,
+        433
+      ],
+      "crop_hash": "49bb3d2d20bd464c21a23d4799646f726a0d48e3f3e4a19d5b10a33647732358",
+      "image_url": "/storage/crops/e3ba8ef4_region_1.png",
+      "mask_url": "/storage/crops/e3ba8ef4_mask_region_1.png",
+      "item_type": {
+        "value": "casual_shirt",
+        "confidence": 0.98
+      },
+      "category": "upper_body",
+      "display_name": "Casual Shirt",
+      "color": {
+        "primary": "black",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 97.8
+          },
+          {
+            "name": "white",
+            "rgb": [
+              250,
+              250,
+              250
+            ],
+            "percentage": 2.2
+          },
+          {
+            "name": "maroon",
+            "rgb": [
+              120,
+              20,
+              20
+            ],
+            "percentage": 0.1
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "upper_body",
+        "confidence": 0.98
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.8
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "garment_attributes": {
+        "attributes": [
+          {
+            "attribute": "no non-textile material",
+            "score": 0.9676
+          },
+          {
+            "attribute": "plain (pattern)",
+            "score": 0.9296
+          },
+          {
+            "attribute": "no special manufacturing technique",
+            "score": 0.5823
+          },
+          {
+            "attribute": "straight",
+            "score": 0.5369
+          },
+          {
+            "attribute": "sheath (skirt)",
+            "score": 0.3446
+          }
+        ],
+        "top_attribute": "no non-textile material"
+      },
+      "formality": {
+        "value": 4,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "polo_shirt",
+          "score": 0.5967
+        },
+        "grounding_dino": {
+          "labels": [
+            {
+              "type": "casual_shirt",
+              "score": 0.91,
+              "raw_label": "long_sleeve_outwear"
+            },
+            {
+              "type": "casual_shirt",
+              "score": 0.89,
+              "raw_label": "jacket or shirt"
+            },
+            {
+              "type": "casual_shirt",
+              "score": 0.3027,
+              "raw_label": "casual shirt"
+            },
+            {
+              "type": "suit_jacket",
+              "score": 0.2946,
+              "raw_label": "suit jacket"
+            },
+            {
+              "type": "wide_leg_pants",
+              "score": 0.2577,
+              "raw_label": "wide leg pants"
+            }
+          ],
+          "models": [
+            "deepfashion2",
+            "florence_2",
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "suit_jacket",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.98
+    },
+    {
+      "region_id": "region_2",
+      "bbox": [
+        55,
+        273,
+        244,
+        513
+      ],
+      "crop_hash": "b4c5c88d6266a2c93245f95ff3db3ee20a04817b79c5847a561b6b89e33e89ca",
+      "image_url": "/storage/crops/e3ba8ef4_region_2.png",
+      "mask_url": "/storage/crops/e3ba8ef4_mask_region_2.png",
+      "item_type": {
+        "value": "jeans",
+        "confidence": 0.55
+      },
+      "category": "lower_body",
+      "display_name": "Jeans",
+      "color": {
+        "primary": "black",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 93.6
+          },
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 4.4
+          },
+          {
+            "name": "black",
+            "rgb": [
+              15,
+              15,
+              15
+            ],
+            "percentage": 2.0
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "lower_body",
+        "confidence": 0.55
+      },
+      "fit": {
+        "value": "relaxed",
+        "confidence": 0.85
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "garment_attributes": {
+        "attributes": [
+          {
+            "attribute": "no non-textile material",
+            "score": 0.9414
+          },
+          {
+            "attribute": "plain (pattern)",
+            "score": 0.7704
+          },
+          {
+            "attribute": "straight",
+            "score": 0.6829
+          },
+          {
+            "attribute": "no special manufacturing technique",
+            "score": 0.517
+          },
+          {
+            "attribute": "sheath (skirt)",
+            "score": 0.4282
+          }
+        ],
+        "top_attribute": "no non-textile material"
+      },
+      "formality": {
+        "value": 3,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "jeans",
+          "score": 0.5
+        },
+        "grounding_dino": {
+          "labels": [
+            {
+              "type": "formal_trousers",
+              "score": 0.9,
+              "raw_label": "trousers"
+            },
+            {
+              "type": "loose_pants",
+              "score": 0.86,
+              "raw_label": "pants or trousers"
+            }
+          ],
+          "models": [
+            "deepfashion2",
+            "florence_2"
+          ]
+        },
+        "qwen": {
+          "item_type": "suit_trousers",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.55
+    },
+    {
+      "region_id": "region_3",
+      "bbox": [
+        93,
+        512,
+        207,
+        582
+      ],
+      "crop_hash": "212d0d4d5157b7911d04f8d932f1ada0a9b9a387f26515679905adeb27084ae4",
+      "image_url": "/storage/crops/e3ba8ef4_region_3.png",
+      "mask_url": "/storage/crops/e3ba8ef4_mask_region_3.png",
+      "item_type": {
+        "value": "boots",
+        "confidence": 0.64
+      },
+      "category": "footwear",
+      "display_name": "Boots",
+      "color": {
+        "primary": "dark brown",
+        "secondary": [],
+        "dominant_colors": [
+          {
+            "name": "dark brown",
+            "rgb": [
+              70,
+              40,
+              20
+            ],
+            "percentage": 90.6
+          },
+          {
+            "name": "dark brown",
+            "rgb": [
+              70,
+              40,
+              20
+            ],
+            "percentage": 7.7
+          },
+          {
+            "name": "charcoal",
+            "rgb": [
+              40,
+              40,
+              40
+            ],
+            "percentage": 1.6
+          }
+        ],
+        "confidence": 0.92
+      },
+      "style": {
+        "value": "Footwear",
+        "confidence": 0.64
+      },
+      "fit": {
+        "value": "regular",
+        "confidence": 0.8
+      },
+      "material": {
+        "value": "cotton",
+        "confidence": 0.85
+      },
+      "garment_attributes": {
+        "attributes": [
+          {
+            "attribute": "plain (pattern)",
+            "score": 0.8518
+          },
+          {
+            "attribute": "no non-textile material",
+            "score": 0.8289
+          },
+          {
+            "attribute": "leggings",
+            "score": 0.6868
+          },
+          {
+            "attribute": "maxi (length)",
+            "score": 0.6184
+          },
+          {
+            "attribute": "tight (fit)",
+            "score": 0.541
+          }
+        ],
+        "top_attribute": "plain (pattern)"
+      },
+      "formality": {
+        "value": 5,
+        "confidence": 0.9
+      },
+      "model_evidence": {
+        "fashionclip": {
+          "top_candidate": "boots",
+          "score": 0.4142
+        },
+        "grounding_dino": {
+          "labels": [
+            {
+              "type": "formal_shoes",
+              "score": 0.85,
+              "raw_label": "shoes"
+            },
+            {
+              "type": "casual_shirt",
+              "score": 0.3187,
+              "raw_label": "clothing item"
+            },
+            {
+              "type": "casual_shirt",
+              "score": 0.3074,
+              "raw_label": "clothing item"
+            },
+            {
+              "type": "casual_shirt",
+              "score": 0.2675,
+              "raw_label": "clothing item"
+            }
+          ],
+          "models": [
+            "florence_2",
+            "grounding_dino"
+          ]
+        },
+        "qwen": {
+          "item_type": "formal_shoes",
+          "agreement": true
+        }
+      },
+      "needs_confirmation": true,
+      "confidence": 0.64
+    }
+  ]
+}

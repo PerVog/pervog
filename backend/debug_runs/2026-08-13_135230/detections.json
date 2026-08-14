@@ -1,0 +1,123 @@
+[
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      60,
+      28,
+      241,
+      525
+    ],
+    "score": 0.3265
+  },
+  {
+    "model": "grounding_dino",
+    "label": "casual shirt",
+    "box": [
+      61,
+      29,
+      241,
+      531
+    ],
+    "score": 0.322
+  },
+  {
+    "model": "grounding_dino",
+    "label": "cargo pants",
+    "box": [
+      74,
+      512,
+      227,
+      583
+    ],
+    "score": 0.2796
+  },
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      159,
+      512,
+      227,
+      582
+    ],
+    "score": 0.3032
+  },
+  {
+    "model": "grounding_dino",
+    "label": "clothing item",
+    "box": [
+      73,
+      511,
+      143,
+      583
+    ],
+    "score": 0.2894
+  },
+  {
+    "model": "grounding_dino",
+    "label": "belt",
+    "box": [
+      144,
+      48,
+      156,
+      141
+    ],
+    "score": 0.4304
+  },
+  {
+    "model": "florence",
+    "label": "jacket or shirt",
+    "box": [
+      48,
+      24,
+      252,
+      294
+    ],
+    "score": 0.89
+  },
+  {
+    "model": "florence",
+    "label": "pants or trousers",
+    "box": [
+      57,
+      276,
+      243,
+      510
+    ],
+    "score": 0.86
+  },
+  {
+    "model": "florence",
+    "label": "shoes",
+    "box": [
+      66,
+      516,
+      234,
+      582
+    ],
+    "score": 0.85
+  },
+  {
+    "model": "deepfashion2",
+    "label": "long_sleeve_outwear",
+    "box": [
+      45,
+      30,
+      255,
+      288
+    ],
+    "score": 0.91
+  },
+  {
+    "model": "deepfashion2",
+    "label": "trousers",
+    "box": [
+      54,
+      270,
+      245,
+      516
+    ],
+    "score": 0.9
+  }
+]
