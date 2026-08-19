@@ -1,17 +1,17 @@
 """
 Clothing Analysis Service — Multi-Model Computer Vision Pipeline Orchestrator.
 
-Implements full staged pipeline:
-Stage 1: Multi-Model Object Detection (Grounding DINO + Florence-2 Large + DeepFashion2)
-Stage 2: Physical Region Fusion (PhysicalRegionFusionEngine) -> region_1, region_2, ...
-Stage 3: SAM 2.1 Mask Segmentation & Quality Validation (MaskQualityChecker)
-Stage 4: Crop Generation, Storage & Crop Validation (StorageManager, CropValidator)
-Stage 5: Mask-Only LAB Color Extraction (ColorAnalyzerService)
-Stage 6: Fine-Grained Garment Attributes (resoa/garment-attributes)
-Stage 7: Dedicated Footwear Classification (FootwearClassifier)
-Stage 8: FashionCLIP + Qwen VLM Evidence Fusion (EnsembleClassifier)
-Stage 9: Post-Classification Suit & Formality Analysis (SuitDetector, FormalityService)
-Stage 10: Pre-API Hard Pipeline Validation (PipelineValidator)
+Implements full 27-phase architecture with:
+1. Physical Region Fusion with Part-Of & Footwear Pair Detection (PhysicalRegionFusionEngine)
+2. SAM 2.1 Mask Segmentation & Category-aware Size Validation (MaskQualityChecker)
+3. Pre-API Crop Verification & Storage (StorageManager, CropValidator)
+4. Mask-Only CIELAB Color Extraction per Region (ColorAnalyzerService)
+5. Dedicated Open vs Closed Footwear Classifier (FootwearClassifier)
+6. Ensemble Evidence Voting (EnsembleClassifier)
+7. Suit Relationship Analysis (SuitDetector)
+8. Formality & Outfit Consistency Rules (FormalityService, ConsistencyEngine)
+9. Hard Validation Gates Pre-API Response (PipelineValidator)
+10. Detailed Debug Run Outputs (debug_runs/<timestamp>/)
 """
 
 from typing import Dict, Any, List, Optional
@@ -63,22 +63,21 @@ class ClothingAnalysisService:
         """Runs the complete multi-model computer vision pipeline on the image."""
         analysis_id = str(uuid.uuid4())[:8]
 
-        # Stage 1: Image Preprocessing
+        # Stage 1: Image Preprocessing & Multi-Model Detection (4A)
         image_rgb = image.convert("RGB")
         width, height = image_rgb.size
         image_np = np.array(image_rgb)
 
-        # Multi-Model Detection Candidates
         grounding_dets = self.model_mgr.grounding_dino.detect(image_rgb)
         florence_dets = self.model_mgr.florence.detect(image_rgb)
         deepfashion_dets = self.model_mgr.deepfashion2.detect(image_rgb)
 
         all_detections = grounding_dets + florence_dets + deepfashion_dets
 
-        # Stage 2: Physical Region Fusion & Deduplication (Phase 2.1)
-        fused_regions = self.fusion_engine.fuse_detections(all_detections, width, height)
+        # Stage 2: Physical Region Fusion & Part-of Object Filtering (4B)
+        fused_regions, discarded_log = self.fusion_engine.fuse_detections(all_detections, width, height)
 
-        # Stage 3: Full Image VLM Context Analysis (Phase 5.3)
+        # Full Image VLM Context Analysis
         vlm_analysis = self.model_mgr.qwen_vl.analyze_full_image(image_rgb)
 
         evaluated_items: List[Dict[str, Any]] = []
@@ -91,47 +90,52 @@ class ClothingAnalysisService:
             bbox = region["bbox"]
             category_hint = region["category_hint"]
 
-            # SAM 2.1 Mask Generation (Phase 3)
+            # SAM 2.1 Mask Generation (4C)
             sam_result = self.model_mgr.sam2.generate_mask(image_rgb, bbox)
             mask = sam_result["mask"]
             crop = sam_result["crop"]
 
-            # Mask Quality Check (Phase 3.1)
+            # Mask Quality Check
             is_valid_mask, mask_ratio, mask_flag = MaskQualityChecker.check_mask_quality(mask, bbox)
 
-            # Perceptual Hashes & Visual Embeddings (Phase 2.3 & 4.1)
+            # Perceptual Hashes & Visual Embeddings (4E)
             hashes = self.visual_embedding_prov.compute_hashes(crop)
             crop_hash = hashes["sha256"]
 
             if crop_hash in crop_hashes_seen:
                 logger.warning(f"DUPLICATE_PHYSICAL_REGION detected for {region_id} (crop_hash={crop_hash[:8]}). Skipping duplicate crop.")
+                discarded_log.append({
+                    "region_id": region_id,
+                    "reason": "DUPLICATE_CROP_HASH",
+                    "details": f"Crop hash {crop_hash[:8]} identical to existing region"
+                })
                 continue
             crop_hashes_seen.add(crop_hash)
 
-            # Save Crop & Mask to Static Storage (Phase 0.1 & Phase 4)
+            # Save Crop & Mask to Static Storage (4D)
             image_url = self.storage_mgr.save_region_crop(analysis_id, region_id, crop)
             mask_url = self.storage_mgr.save_region_mask(analysis_id, region_id, mask)
 
-            # Pre-API Crop Verification (Phase 0.2)
+            # Pre-API Crop Verification (4E)
             CropValidator.validate_region_crop(image_url, region_id)
 
             debug_crops.append((region_id, crop, crop_hash, image_url))
 
-            # Stage 5: Mask-Only LAB Color Analysis (Phase 7)
+            # Mask-Only LAB Color Analysis
             color_result = self.color_analyzer.analyze_mask_crop(image_np, mask, bbox)
 
-            # Stage 6: Fine-Grained Garment Attribute Classification (Phase 5.2)
+            # Fine-Grained Garment Attribute Classification
             garment_attr_res = self.model_mgr.garment_attributes.predict_attributes(crop)
 
-            # Stage 7: FashionCLIP Candidate Ranking for Region (Phase 5.1)
+            # FashionCLIP Candidate Ranking for Region
             fashionclip_rankings = self.model_mgr.fashionclip.rank_candidates(crop, category_hint)
 
-            # Dedicated Footwear Classification (Phase 6)
+            # Dedicated Footwear Classification (Section 9 & 10)
             footwear_res = None
             if category_hint == "footwear":
                 footwear_res = self.model_mgr.footwear_classifier.classify_footwear_crop(crop, fashionclip_rankings)
 
-            # Stage 8: Ensemble Evidence Fusion (Phase 8)
+            # Ensemble Evidence Fusion (STEP 6)
             classification = self.ensemble_classifier.classify_region(
                 region_id=region_id,
                 category_hint=category_hint,
@@ -141,14 +145,15 @@ class ClothingAnalysisService:
                 models_detected=region["models_detected"]
             )
 
-            # Footwear override if dedicated footwear classifier is confident
+            # Dedicated footwear override
             if footwear_res and category_hint == "footwear":
                 fw_type = footwear_res["footwear_type"]
                 classification["item_type"] = fw_type
-                classification["category"] = "Footwear"
+                classification["category"] = "footwear"
                 classification["display_name"] = ItemTaxonomyService.derive_display_name(fw_type)
+                classification["confidence"] = footwear_res["confidence"]
 
-            # Item Formality & Fit Estimation (Phase 12)
+            # Item Formality & Fit Estimation
             item_formality = FormalityService.calculate_item_formality(classification["item_type"])
             fit_val, fit_conf, fit_needs_confirm = FitDetector.estimate_fit(mask, bbox, classification["item_type"])
 
@@ -172,16 +177,16 @@ class ClothingAnalysisService:
                 "confidence": classification["confidence"]
             }
 
-            # Consistency Engine Validation (Phase 13)
+            # Consistency Engine Validation
             item_dict = ConsistencyEngine.validate_and_correct_item(item_dict)
             evaluated_items.append(item_dict)
 
-        # Stage 9: Post-Classification Suit Detection & Outfit Formality (Phase 10 & 11)
+        # Post-Classification Suit Detection & Outfit Formality
         is_suit, suit_confidence = SuitDetector.detect_suit(evaluated_items, vlm_analysis.get("overall_outfit", {}))
         outfit_context_raw = FormalityService.calculate_outfit_formality(evaluated_items, is_suit)
         outfit_context_raw = ConsistencyEngine.validate_outfit_consistency(outfit_context_raw, evaluated_items, is_suit)
 
-        # Stage 10: Hard Pre-API Response Validation Gates (Phase 13)
+        # Pre-API Response Hard Validation Gates (STEP 8)
         PipelineValidator.validate_pipeline_output(evaluated_items)
 
         overall_outfit = OverallOutfitContext(
@@ -225,7 +230,6 @@ class ClothingAnalysisService:
                 model_evidence=it["model_evidence"],
                 needs_confirmation=it["needs_confirmation"],
                 
-                # Backward compatibility properties
                 id=it["region_id"],
                 title=title,
                 category_legacy=it["display_name"],
@@ -234,7 +238,7 @@ class ClothingAnalysisService:
                     "category": it["display_name"],
                     "title": title,
                     "primary_color": it["color"]["primary"],
-                    "color_hex": "#0A192F" if it["color"]["primary"] == "navy" else "#FFFFFF",
+                    "color_hex": "#0A192F" if it["color"]["primary"] in ["navy", "black"] else "#FFFFFF",
                     "formality": it["formality"]["value"],
                     "style": overall_outfit.style,
                     "confidence": it["confidence"],
@@ -243,9 +247,9 @@ class ClothingAnalysisService:
             )
             pydantic_items.append(region_obj)
 
-        # Save Visual Debug Image & Run Artifacts (Phase 4.2 & Phase 16)
+        # Save Visual Debug Image & Run Artifacts (Section 23 & 24)
         if os.environ.get("AI_DEBUG", "true").lower() == "true":
-            self._save_debug_run(analysis_id, image_rgb, all_detections, fused_regions, debug_crops, evaluated_items, overall_outfit)
+            self._save_debug_run(analysis_id, image_rgb, all_detections, fused_regions, debug_crops, evaluated_items, overall_outfit, discarded_log)
 
         primary_item = pydantic_items[0] if pydantic_items else None
         
@@ -256,7 +260,6 @@ class ClothingAnalysisService:
             is_suit=is_suit,
             items=pydantic_items,
             
-            # Backwards compatibility top-level fields
             item_type=primary_item.item_type if primary_item else AttributeValueWithConfidence(value="casual_shirt", confidence=0.85),
             category=AttributeValueWithConfidence(value=primary_item.display_name if primary_item else "Casual Shirt", confidence=0.85),
             primary_color=AttributeValueWithConfidence(value=primary_item.color.primary if primary_item else "white", confidence=0.85),
@@ -276,18 +279,22 @@ class ClothingAnalysisService:
         fused_regions: List[Dict[str, Any]],
         debug_crops: List[Any],
         evaluated_items: List[Dict[str, Any]],
-        overall_outfit: OverallOutfitContext
+        overall_outfit: OverallOutfitContext,
+        discarded_log: List[Dict[str, Any]]
     ):
-        """Saves debug outputs and generates visual debug image to debug_runs/<timestamp>/."""
+        """Saves debug outputs, discarded candidate logs, and visual debug image to debug_runs/<timestamp>/."""
         try:
             timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
             debug_dir = os.path.join("debug_runs", timestamp)
             os.makedirs(debug_dir, exist_ok=True)
 
-            image_rgb.save(os.path.join(debug_dir, "original.jpg"))
+            image_rgb.save(os.path.join(debug_dir, "original.png"))
 
             with open(os.path.join(debug_dir, "detections.json"), "w") as f:
                 json.dump(all_detections, f, indent=2)
+
+            with open(os.path.join(debug_dir, "discarded_candidates.json"), "w") as f:
+                json.dump(discarded_log, f, indent=2)
 
             for item in debug_crops:
                 reg_id = item[0]
@@ -312,10 +319,10 @@ class ClothingAnalysisService:
 
                 draw.rectangle(bbox, outline=(0, 255, 0), width=3)
                 label_text = f"{region_id}: {display_name} ({conf:.2f})"
-                draw.rectangle([bbox[0], max(0, bbox[1] - 25), bbox[0] + 220, bbox[1]], fill=(0, 255, 0))
+                draw.rectangle([bbox[0], max(0, bbox[1] - 25), bbox[0] + 240, bbox[1]], fill=(0, 255, 0))
                 draw.text((bbox[0] + 5, max(0, bbox[1] - 20)), label_text, fill=(0, 0, 0))
 
-            debug_img.save(os.path.join(debug_dir, "detections.jpg"))
+            debug_img.save(os.path.join(debug_dir, "detections.png"))
             logger.info(f"Saved AI debug run artifacts to {debug_dir}")
         except Exception as e:
             logger.error(f"Failed to save debug run artifacts: {e}")

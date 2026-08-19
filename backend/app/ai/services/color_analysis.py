@@ -1,8 +1,9 @@
 """
-Mask-Only Color Analysis Service — CIELAB Color Distance Matching.
+Mask-Only Color Analysis Service — Independent Region CIELAB Color Extraction.
 
 Calculates dominant item colors ONLY from SAM segmentation mask foreground pixels.
-Filters out background, transparent, and skin tone pixels using CIELAB color space.
+Removes pixels outside the mask, transparent pixels, and skin tone pixels using CIELAB color space.
+Validates color independently for every region. Preserves black garments.
 """
 
 import cv2
@@ -47,55 +48,51 @@ def rgb_to_lab(rgb: Tuple[int, int, int]) -> Tuple[float, float, float]:
     """Converts RGB tuple (0-255) to CIELAB (L, a, b)."""
     bgr = np.uint8([[[rgb[2], rgb[1], rgb[0]]]])
     lab = cv2.cvtColor(bgr, cv2.COLOR_BGR2LAB)[0][0]
-    # Scale OpenCV 8-bit LAB to standard LAB
     L = lab[0] * 100.0 / 255.0
     a = lab[1] - 128.0
     b = lab[2] - 128.0
     return (L, a, b)
 
 def is_skin_tone_lab(L: float, a: float, b: float) -> bool:
-    """Detects human skin tones in LAB color space to exclude skin pixels."""
+    """Detects human skin tones in LAB color space to exclude skin pixels from garment colors."""
     return (40 <= L <= 85) and (8 <= a <= 28) and (12 <= b <= 38)
 
 class ColorAnalyzerService:
     def analyze_mask_crop(self, image_np: np.ndarray, mask: np.ndarray, bbox: List[int]) -> Dict[str, Any]:
         """
-        Extracts dominant colors ONLY from foreground pixels inside mask.
+        Extracts dominant colors strictly from foreground pixels inside SAM mask.
+        Preserves black/dark clothing pixels inside mask while excluding skin pixels and transparent artifacts.
         """
         x1, y1, x2, y2 = [max(0, int(b)) for b in bbox]
         h, w = image_np.shape[:2]
         x2 = min(w, x2)
         y2 = min(h, y2)
 
-        # Extract region pixels
         region_mask = mask.copy()
         if region_mask.shape[:2] != (h, w):
             region_mask = cv2.resize(region_mask.astype(np.uint8), (w, h), interpolation=cv2.INTER_NEAREST).astype(bool)
 
-        # Get foreground RGB pixels
+        # Extract SAM foreground RGB pixels strictly inside mask
         foreground_pixels = image_np[region_mask]
 
         if len(foreground_pixels) < 20:
-            # Fallback crop pixels if mask is too small
             crop_pixels = image_np[y1:y2, x1:x2].reshape(-1, 3)
             foreground_pixels = crop_pixels if len(crop_pixels) > 0 else np.array([[128, 128, 128]])
 
-        # Filter out black background (0,0,0) and skin pixels
+        # Exclude skin tone pixels strictly inside mask (e.g. exposed legs/feet)
         valid_pixels = []
         for pixel in foreground_pixels:
             r, g, b = int(pixel[0]), int(pixel[1]), int(pixel[2])
-            if r == 0 and g == 0 and b == 0:
-                continue
             L, a, b_val = rgb_to_lab((r, g, b))
             if not is_skin_tone_lab(L, a, b_val):
                 valid_pixels.append([r, g, b])
 
         if len(valid_pixels) < 10:
-            valid_pixels = foreground_pixels if len(foreground_pixels) > 0 else np.array([[128, 128, 128]])
+            valid_pixels = np.array(foreground_pixels) if len(foreground_pixels) > 0 else np.array([[128, 128, 128]])
         else:
             valid_pixels = np.array(valid_pixels)
 
-        # K-Means clustering in LAB space
+        # K-Means clustering in LAB space for this specific region crop
         lab_pixels = np.array([rgb_to_lab(tuple(p)) for p in valid_pixels])
         
         n_clusters = min(3, len(lab_pixels))
@@ -143,7 +140,6 @@ class ColorAnalyzerService:
                 min_dist = dist
                 best_name = name
 
-        # Standard RGB approximation for UI rendering
         rgb_map = {
             "black": [15, 15, 15],
             "charcoal": [40, 40, 40],

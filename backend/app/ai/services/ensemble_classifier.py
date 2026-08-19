@@ -2,12 +2,13 @@
 Ensemble Classifier — Multi-Model Evidence Voting and Calibrated Classification Engine.
 
 Integrates evidence from Grounding DINO, Florence-2, DeepFashion2, FashionCLIP,
-resoa/garment-attributes, and Qwen2.5-VL using a calibrated evidence weighting framework.
+garment-attributes, and Qwen2.5-VL using a calibrated evidence weighting framework.
 Calculates final item_type, category, display_name, confidence, candidate_margin, and needs_confirmation.
 """
 
 from typing import Dict, Any, List, Tuple
 from app.ai.taxonomy.item_taxonomy import ItemTaxonomyService
+import numpy as np
 import logging
 
 logger = logging.getLogger(__name__)
@@ -50,7 +51,7 @@ class EnsembleClassifier:
     ) -> Dict[str, Any]:
         """
         Calculates evidence scores for candidate item_types and selects top candidate.
-        Determines needs_confirmation using confidence threshold, candidate_margin, and model agreement.
+        Determines needs_confirmation using candidate_margin (< 0.10), confidence threshold, and model agreement.
         """
         evidence_scores: Dict[str, float] = {}
         model_evidence_log: Dict[str, Any] = {}
@@ -105,8 +106,12 @@ class EnsembleClassifier:
         # Select winner with highest evidence score
         sorted_candidates = sorted(evidence_scores.items(), key=lambda x: x[1], reverse=True)
         winning_type, winning_score = sorted_candidates[0] if sorted_candidates else ("casual_shirt", 1.0)
-        runner_up_score = sorted_candidates[1][1] if len(sorted_candidates) > 1 else 0.0
-        candidate_margin = winning_score - runner_up_score
+        
+        # Softmax / Relative Margin Calculation (Refinement 5)
+        total_score = sum(max(0.01, s) for _, s in sorted_candidates)
+        top_prob = max(0.01, winning_score) / float(total_score)
+        second_prob = (max(0.01, sorted_candidates[1][1]) / float(total_score)) if len(sorted_candidates) > 1 else 0.0
+        candidate_margin = top_prob - second_prob
 
         # Enforce canonical taxonomy
         canonical_type = ItemTaxonomyService.normalize_item_type(winning_type)
@@ -115,9 +120,9 @@ class EnsembleClassifier:
 
         confidence = round(min(0.98, max(0.55, winning_score / 7.0)), 2)
 
-        # User Modification 4: candidate_margin + model_agreement + confidence threshold for needs_confirmation
+        # Calibrated Candidate Margin (margin < 0.10 -> ambiguous -> needs_confirmation = True)
         model_disagreement = (vlm_top_type and vlm_top_type != canonical_type) or (top_clip_canonical != canonical_type)
-        needs_confirmation = (confidence < 0.70) or (candidate_margin < 0.80) or model_disagreement
+        needs_confirmation = (confidence < 0.65) or (candidate_margin < 0.10) or model_disagreement
 
         model_evidence_log["candidate_margin"] = round(candidate_margin, 2)
         model_evidence_log["model_disagreement"] = model_disagreement
