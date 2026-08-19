@@ -78,37 +78,39 @@ class ClothingAnalysisService:
         # Filter out person boxes from raw garment detections
         garment_raw_detections = [d for d in raw_detections if d.get("label", "").lower() not in ["person", "man", "woman"]]
 
-        # ROI Person Garment Proposal Fallback if detectors return under-detecting proposals for a person
-        if len(garment_raw_detections) <= 1 and person_instances:
+        # ROI Person Garment Proposal Fallback ONLY if detectors returned 0 garment detections for a person
+        if len(garment_raw_detections) == 0 and person_instances:
             for p_idx, p in enumerate(person_instances):
                 px1, py1, px2, py2 = p["bbox"]
                 pw, ph = max(10, px2 - px1), max(10, py2 - py1)
                 pid = p.get("person_id", f"person_00{p_idx+1}")
+                aspect_ratio = ph / float(pw)
                 
-                # Upper body proposal
+                # Always propose Upper Body for a person
                 garment_raw_detections.append({
                     "model": "person_roi_proposal",
                     "label": "upper_body",
-                    "box": [int(px1 + 0.05 * pw), int(py1 + 0.08 * ph), int(px2 - 0.05 * pw), int(py1 + 0.52 * ph)],
+                    "box": [int(px1 + 0.05 * pw), int(py1 + 0.05 * ph), int(px2 - 0.05 * pw), int(py1 + (0.55 if aspect_ratio > 1.35 else 0.90) * ph)],
                     "score": 0.88,
                     "person_id": pid
                 })
-                # Lower body proposal
-                garment_raw_detections.append({
-                    "model": "person_roi_proposal",
-                    "label": "lower_body",
-                    "box": [int(px1 + 0.08 * pw), int(py1 + 0.48 * ph), int(px2 - 0.08 * pw), int(py1 + 0.88 * ph)],
-                    "score": 0.85,
-                    "person_id": pid
-                })
-                # Footwear proposal
-                garment_raw_detections.append({
-                    "model": "person_roi_proposal",
-                    "label": "footwear",
-                    "box": [int(px1 + 0.05 * pw), int(py1 + 0.85 * ph), int(px2 - 0.05 * pw), int(py2)],
-                    "score": 0.80,
-                    "person_id": pid
-                })
+
+                # Only propose Lower Body and Footwear for tall full-body photos (aspect ratio > 1.35)
+                if aspect_ratio > 1.35:
+                    garment_raw_detections.append({
+                        "model": "person_roi_proposal",
+                        "label": "lower_body",
+                        "box": [int(px1 + 0.08 * pw), int(py1 + 0.48 * ph), int(px2 - 0.08 * pw), int(py1 + 0.88 * ph)],
+                        "score": 0.85,
+                        "person_id": pid
+                    })
+                    garment_raw_detections.append({
+                        "model": "person_roi_proposal",
+                        "label": "footwear",
+                        "box": [int(px1 + 0.05 * pw), int(py1 + 0.85 * ph), int(px2 - 0.05 * pw), int(py2)],
+                        "score": 0.80,
+                        "person_id": pid
+                    })
 
         # 2. Physical Region Fusion (Layer Separation & IoU Collapse)
         fused_regions = self.fusion_engine.fuse_detections(garment_raw_detections, (width, height), person_instances)

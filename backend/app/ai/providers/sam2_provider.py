@@ -79,8 +79,17 @@ class SAM2Provider:
                 mask_np = masks[0][0][0].cpu().numpy().astype(bool)
                 mask_area = int(np.sum(mask_np))
                 
-                # Apply mask to crop image (fall back to unmasked for footwear to keep clean visibility)
-                if category_hint in ["footwear", "shoes", "sandals", "slides"]:
+                # Check center region foreground ratio to detect center blackout
+                sub_mask = mask_np[y1:y2, x1:x2]
+                h_sub, w_sub = sub_mask.shape
+                cy1, cy2 = int(0.20 * h_sub), int(0.80 * h_sub)
+                cx1, cx2 = int(0.20 * w_sub), int(0.80 * w_sub)
+                center_sub = sub_mask[cy1:cy2, cx1:cx2]
+                center_fg = float(np.sum(center_sub)) / float(max(1, center_sub.size)) if center_sub.size > 0 else 1.0
+
+                # Apply mask to crop image (fall back to unmasked for footwear or center-blackout crops)
+                is_footwear = (category_hint in ["footwear", "shoes", "sandals", "slides"])
+                if is_footwear or center_fg < 0.30:
                     crop_pil = Image.fromarray(img_np[y1:y2, x1:x2])
                 else:
                     masked_img = img_np.copy()
@@ -118,9 +127,16 @@ class SAM2Provider:
         fg_pixels_sub = binary_mask[y1:y2, x1:x2]
         fg_ratio = float(np.sum(fg_pixels_sub)) / float(max(1, fg_pixels_sub.size))
 
-        # Footwear or under-segmented crops use clean RGB bounding box photo crop to avoid black silhouettes
+        # Check center region foreground ratio to detect center blackout (e.g. blue shirt on blue ocean background)
+        h_sub, w_sub = fg_pixels_sub.shape
+        cy1, cy2 = int(0.20 * h_sub), int(0.80 * h_sub)
+        cx1, cx2 = int(0.20 * w_sub), int(0.80 * w_sub)
+        center_sub = fg_pixels_sub[cy1:cy2, cx1:cx2]
+        center_fg = float(np.sum(center_sub)) / float(max(1, center_sub.size)) if center_sub.size > 0 else 1.0
+
+        # Footwear, center-blackout, or under-segmented crops use clean RGB bounding box photo crop to avoid black silhouettes
         is_footwear = (category_hint in ["footwear", "shoes", "sandals", "slides"])
-        if is_footwear or fg_ratio < 0.25 or fg_ratio > 0.90:
+        if is_footwear or center_fg < 0.30 or fg_ratio < 0.25 or fg_ratio > 0.90:
             binary_mask = np.zeros((height, width), dtype=bool)
             binary_mask[y1:y2, x1:x2] = True
             crop_pil = Image.fromarray(img_np[y1:y2, x1:x2])
