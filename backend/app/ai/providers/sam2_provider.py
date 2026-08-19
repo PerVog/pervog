@@ -43,7 +43,7 @@ class SAM2Provider:
         finally:
             socket.setdefaulttimeout(orig_timeout)
 
-    def generate_mask(self, image: Image.Image, box: Tuple[int, int, int, int]) -> Dict[str, Any]:
+    def generate_mask(self, image: Image.Image, box: Tuple[int, int, int, int], category_hint: str = None) -> Dict[str, Any]:
         """
         Generates precise item binary mask for the given bounding box [x1, y1, x2, y2].
         Returns:
@@ -79,10 +79,13 @@ class SAM2Provider:
                 mask_np = masks[0][0][0].cpu().numpy().astype(bool)
                 mask_area = int(np.sum(mask_np))
                 
-                # Apply mask to crop image
-                masked_img = img_np.copy()
-                masked_img[~mask_np] = 0
-                crop_pil = Image.fromarray(masked_img[y1:y2, x1:x2])
+                # Apply mask to crop image (fall back to unmasked for footwear to keep clean visibility)
+                if category_hint in ["footwear", "shoes", "sandals", "slides"]:
+                    crop_pil = Image.fromarray(img_np[y1:y2, x1:x2])
+                else:
+                    masked_img = img_np.copy()
+                    masked_img[~mask_np] = 0
+                    crop_pil = Image.fromarray(masked_img[y1:y2, x1:x2])
 
                 return {
                     "mask": mask_np,
@@ -93,9 +96,9 @@ class SAM2Provider:
                 logger.error(f"SAM 2.1 mask generation error: {e}")
 
         # OpenCV GrabCut contour segmentation fallback
-        return self._grabcut_segmentation(img_np, (x1, y1, x2, y2))
+        return self._grabcut_segmentation(img_np, (x1, y1, x2, y2), category_hint)
 
-    def _grabcut_segmentation(self, img_np: np.ndarray, box: Tuple[int, int, int, int]) -> Dict[str, Any]:
+    def _grabcut_segmentation(self, img_np: np.ndarray, box: Tuple[int, int, int, int], category_hint: str = None) -> Dict[str, Any]:
         x1, y1, x2, y2 = box
         height, width = img_np.shape[:2]
 
@@ -112,10 +115,21 @@ class SAM2Provider:
             binary_mask = np.zeros((height, width), dtype=bool)
             binary_mask[y1:y2, x1:x2] = True
 
+        fg_pixels_sub = binary_mask[y1:y2, x1:x2]
+        fg_ratio = float(np.sum(fg_pixels_sub)) / float(max(1, fg_pixels_sub.size))
+
+        # Footwear or under-segmented crops use clean RGB bounding box photo crop to avoid black silhouettes
+        is_footwear = (category_hint in ["footwear", "shoes", "sandals", "slides"])
+        if is_footwear or fg_ratio < 0.25 or fg_ratio > 0.90:
+            binary_mask = np.zeros((height, width), dtype=bool)
+            binary_mask[y1:y2, x1:x2] = True
+            crop_pil = Image.fromarray(img_np[y1:y2, x1:x2])
+        else:
+            masked_img = img_np.copy()
+            masked_img[~binary_mask] = 0
+            crop_pil = Image.fromarray(masked_img[y1:y2, x1:x2])
+
         mask_area = int(np.sum(binary_mask))
-        masked_img = img_np.copy()
-        masked_img[~binary_mask] = 0
-        crop_pil = Image.fromarray(masked_img[y1:y2, x1:x2])
 
         return {
             "mask": binary_mask,

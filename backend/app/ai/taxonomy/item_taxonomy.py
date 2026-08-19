@@ -10,9 +10,9 @@ from pydantic import BaseModel
 
 class ItemTaxonomyEntry(BaseModel):
     item_type: str
-    category_group: str    # upper_body, outerwear, lower_body, full_body, footwear, accessory
+    category_group: str    # upper_body, outerwear, lower_body, full_body, footwear, accessory, unknown
     garment_type: str      # tshirt, blazer, dress_shirt, etc.
-    physical_layer: str    # inner, outer, lower, full, footwear, accessory
+    physical_layer: str    # inner, outer, lower, full, footwear, accessory, unknown
     display_name: str
     valid_styles: List[str]
     base_formality: int    # 1 to 10 scale baseline
@@ -25,6 +25,17 @@ class ItemTaxonomyEntry(BaseModel):
         return self.category_group
 
 CANONICAL_TAXONOMY: Dict[str, ItemTaxonomyEntry] = {
+    # UNKNOWN FALLBACK (NO SILENT CASUAL_SHIRT MUTATION)
+    "unknown": ItemTaxonomyEntry(
+        item_type="unknown",
+        category_group="unknown",
+        garment_type="unknown",
+        physical_layer="unknown",
+        display_name="Unknown Item",
+        valid_styles=["casual"],
+        base_formality=3
+    ),
+
     # UPPER BODY - INNER LAYER
     "t_shirt": ItemTaxonomyEntry(
         item_type="t_shirt",
@@ -404,6 +415,11 @@ ALIAS_TO_CANONICAL: Dict[str, str] = {
     "printed shirt": "casual_shirt",
     "track pants": "joggers",
     "baggy pants": "loose_pants",
+    "upper_body": "casual_shirt",
+    "lower_body": "loose_pants",
+    "footwear": "formal_shoes",
+    "outerwear": "casual_jacket",
+    "accessory": "belt",
     "short_sleeve_top": "t_shirt",
     "long_sleeve_top": "casual_shirt",
     "short_sleeve_outwear": "casual_jacket",
@@ -448,7 +464,7 @@ class ItemTaxonomyService:
             return "dress_shirt"
         if "t_shirt" in cleaned or "tshirt" in cleaned:
             return "t_shirt"
-        if "shirt" in cleaned:
+        if "shirt" in cleaned and "unused" not in cleaned:
             return "casual_shirt"
         if "suit" in cleaned and ("pant" in cleaned or "trouser" in cleaned):
             return "suit_trousers"
@@ -485,12 +501,12 @@ class ItemTaxonomyService:
         if "bag" in cleaned:
             return "bag"
             
-        return "casual_shirt"
+        return "unknown"
 
     @staticmethod
     def get_entry(item_type: Any) -> ItemTaxonomyEntry:
         canonical = ItemTaxonomyService.normalize_item_type(item_type)
-        return CANONICAL_TAXONOMY.get(canonical, CANONICAL_TAXONOMY["casual_shirt"])
+        return CANONICAL_TAXONOMY.get(canonical, CANONICAL_TAXONOMY["unknown"])
 
     @staticmethod
     def derive_category_group(item_type: Any) -> str:

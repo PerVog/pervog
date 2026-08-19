@@ -47,23 +47,21 @@ class LocalVisionProvider(VisionProvider):
         
         items_dict = []
         for it in res.items:
-            items_dict.append({
-                "id": it.region_id,
-                "title": it.title,
-                "category": it.display_name,
-                "item_type": it.item_type.value,
-                "image_url": it.image_url or "",
-                "suggested_metadata": it.suggested_metadata or {}
-            })
+            it_dict = it.model_dump() if hasattr(it, "model_dump") else it.dict()
+            items_dict.append(it_dict)
+
+        primary = res.items[0] if res.items else None
 
         return {
-            "success": True,
-            "overall_outfit": res.overall_outfit.model_dump() if res.overall_outfit else {},
+            "success": res.success,
+            "overall_outfit": res.overall_outfit.model_dump() if (res.overall_outfit and hasattr(res.overall_outfit, "model_dump")) else (res.overall_outfit.dict() if res.overall_outfit else {}),
             "is_multi_item": res.is_multi_item,
             "is_suit": res.is_suit,
+            "people": [p.model_dump() if hasattr(p, "model_dump") else p.dict() for p in res.people] if res.people else [],
             "items": items_dict,
-            "item_type": res.item_type.value if res.item_type else "casual_shirt",
-            "category": res.category.value if res.category else "Casual Shirt",
-            "primary_color": res.primary_color.value if res.primary_color else "white",
-            "formality": res.formality.value if res.formality else 3
+            "item_type": primary.item_type.value if (primary and hasattr(primary.item_type, "value")) else "unknown",
+            "category": primary.display_name if primary else "Unknown Item",
+            "primary_color": primary.color.primary if (primary and hasattr(primary.color, "primary")) else "unknown",
+            "formality": primary.formality.value if (primary and hasattr(primary.formality, "value")) else 3,
+            "provider_status": res.provider_status
         }

@@ -65,7 +65,17 @@ export const uploadImage = async (file) => {
     body: formData,
   });
 
-  if (!res.ok) throw new Error('Failed to upload image');
+  if (!res.ok) {
+    const errText = await res.text().catch(() => '');
+    let errMsg = `Upload failed with status ${res.status}`;
+    try {
+      const errJson = JSON.parse(errText);
+      if (errJson.detail) errMsg = errJson.detail;
+    } catch (e) {
+      if (errText) errMsg = errText;
+    }
+    throw new Error(errMsg);
+  }
   return res.json();
 };
 

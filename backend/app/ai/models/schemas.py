@@ -1,3 +1,10 @@
+"""
+AI Vision Data Schemas — Multi-Model Data Flow Contracts.
+
+Defines Pydantic data schemas for normalized detections, evidence separation,
+physical regions, and clothing analysis API responses.
+"""
+
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
 
@@ -10,7 +17,7 @@ class NormalizedDetection(BaseModel):
     confidence: float
     bbox: List[int]              # [x1, y1, x2, y2]
     normalized_bbox: List[float] = Field(default_factory=list)
-    person_id: str = "person_001"
+    person_id: Optional[str] = "person_001"
     mask: Optional[Any] = None
     label: str = ""
 
@@ -29,6 +36,7 @@ class ColorDetailResult(BaseModel):
     secondary: List[str] = []
     dominant_colors: List[DominantColor] = []
     confidence: float = 0.85
+    source: Optional[str] = "mask_cielab_analysis"
 
 class FormalityScoreDetail(BaseModel):
     value: int
@@ -48,25 +56,20 @@ class CandidateHypothesis(BaseModel):
 
 class PhysicalRegion(BaseModel):
     region_id: str
-    person_id: str = "person_001"
+    person_id: Optional[str] = "person_001"
     category_group: str = "upper_body"
-    garment_type: str = "casual_shirt"
+    garment_type: str = "unknown"
     physical_layer: str = "inner"
     bbox: List[int] = Field(default_factory=lambda: [0, 0, 100, 100])
-    mask_path: Optional[str] = None
-    crop_path: Optional[str] = None
-    crop_hash: str = ""
-    mask_area_ratio: float = 0.50
-    candidate_types: List[CandidateHypothesis] = Field(default_factory=list)
-    final_type: str = ""
     category_hint: str = ""
+    candidate_labels: List[Dict[str, Any]] = Field(default_factory=list)
     models_detected: List[str] = Field(default_factory=list)
-    model_evidence: Dict[str, Any] = Field(default_factory=dict)
+    fusion_score: float = 0.85
     provenance: Dict[str, Any] = Field(default_factory=dict)
 
 class EvaluatedItemRegion(BaseModel):
     region_id: str
-    person_id: str = "person_001"
+    person_id: Optional[str] = "person_001"
     category_group: str = "upper_body"
     garment_type: str = "casual_shirt"
     physical_layer: str = "inner"
@@ -76,28 +79,35 @@ class EvaluatedItemRegion(BaseModel):
     category: str
     display_name: str
     color: ColorDetailResult
+    color_hex: str = "#000000"
     style: AttributeValueWithConfidence
     fit: AttributeValueWithConfidence
     material: AttributeValueWithConfidence
+    pattern: AttributeValueWithConfidence
     formality: FormalityScoreDetail
-    model_evidence: Dict[str, Any] = Field(default_factory=dict)
-    provenance: Dict[str, Any] = Field(default_factory=dict)
+    confidence: float = 0.85
     needs_confirmation: bool = False
-    
+
+    # Evidence Separation Fields
+    detection: Dict[str, Any] = Field(default_factory=dict)
+    segmentation: Dict[str, Any] = Field(default_factory=dict)
+    classification: Dict[str, Any] = Field(default_factory=dict)
+
     # Backwards compatibility & Image URLs for UI rendering
     id: Optional[str] = None
     title: Optional[str] = None
-    category_legacy: Optional[str] = None
+    crop_url: Optional[str] = None
     image_url: Optional[str] = None
     mask_url: Optional[str] = None
-    suggested_metadata: Optional[Dict[str, Any]] = None
+    model_evidence: Dict[str, Any] = Field(default_factory=dict)
+    provenance: Dict[str, Any] = Field(default_factory=dict)
 
 class PersonGroup(BaseModel):
     person_id: str
     bbox: List[int]
     garments: List[EvaluatedItemRegion] = []
 
-class FullClothingAnalysisResponse(BaseModel):
+class ClothingAnalysisResponse(BaseModel):
     success: bool = True
     overall_outfit: Optional[OverallOutfitContext] = None
     is_multi_item: bool = True
@@ -108,18 +118,5 @@ class FullClothingAnalysisResponse(BaseModel):
     # Provider diagnostic status
     provider_status: Dict[str, Any] = Field(default_factory=dict)
 
-    # Backwards compatibility top-level fallbacks for single item calls
-    item_type: Optional[AttributeValueWithConfidence] = None
-    category: Optional[AttributeValueWithConfidence] = None
-    subcategory: Optional[AttributeValueWithConfidence] = None
-    primary_color: Optional[AttributeValueWithConfidence] = None
-    secondary_colors: List[AttributeValueWithConfidence] = []
-    dominant_colors: List[DominantColor] = []
-    pattern: Optional[AttributeValueWithConfidence] = None
-    style: Optional[Any] = None
-    fit: Optional[AttributeValueWithConfidence] = None
-    material: Optional[AttributeValueWithConfidence] = None
-    occasion: List[AttributeValueWithConfidence] = []
-    season: List[str] = []
-    weather: List[str] = []
-    formality: Optional[FormalityScoreDetail] = None
+# Alias for API route compatibility
+FullClothingAnalysisResponse = ClothingAnalysisResponse

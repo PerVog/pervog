@@ -6,14 +6,16 @@ person bounding boxes and assign unique person_id identifiers (person_001, perso
 Avoids loading duplicate models to optimize VRAM and latency.
 """
 
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
+from PIL import Image
+import numpy as np
 import logging
 
 logger = logging.getLogger(__name__)
 
 class PersonDetector:
     @staticmethod
-    def extract_people(all_detections: List[Dict[str, Any]], img_width: int, img_height: int) -> List[Dict[str, Any]]:
+    def extract_people(all_detections: List[Dict[str, Any]], img_width: int, img_height: int, image: Optional[Image.Image] = None) -> List[Dict[str, Any]]:
         """
         Extracts person instances from multi-model candidate detections.
         Returns list of person dicts: [{"person_id": "person_001", "bbox": [x1, y1, x2, y2]}, ...]
@@ -25,7 +27,15 @@ class PersonDetector:
                 person_boxes.append(det["box"])
 
         if not person_boxes:
-            # Default single person spanning full image
+            # If an image is provided, verify it is a real photo (not a blank/solid image)
+            if image is not None:
+                img_np = np.array(image.convert("RGB"))
+                std_dev = float(np.std(img_np))
+                if std_dev < 5.0:
+                    # Blank/solid image -> no person present
+                    return []
+            
+            # Default single person spanning full image for outfit photos
             return [{
                 "person_id": "person_001",
                 "bbox": [0, 0, img_width, img_height]

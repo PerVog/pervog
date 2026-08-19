@@ -24,5 +24,15 @@ class PhysicalRegionDeduplicator:
     @staticmethod
     def deduplicate_and_fuse(detections: List[Dict[str, Any]], img_width: int, img_height: int) -> List[Dict[str, Any]]:
         engine = PhysicalRegionFusionEngine()
-        fused_regions, _ = engine.fuse_detections(detections, img_width, img_height)
-        return fused_regions
+        fused_regions = engine.fuse_detections(detections, (img_width, img_height))
+        results = []
+        for reg in fused_regions:
+            if hasattr(reg, "model_dump"):
+                d = reg.model_dump()
+            elif hasattr(reg, "dict"):
+                d = reg.dict()
+            else:
+                d = dict(reg)
+            d["cluster_size"] = len(d.get("candidate_labels", []))
+            results.append(d)
+        return results

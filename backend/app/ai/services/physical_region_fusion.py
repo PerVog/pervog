@@ -14,6 +14,7 @@ import numpy as np
 import logging
 
 from app.ai.taxonomy.item_taxonomy import ItemTaxonomyService
+from app.ai.models.schemas import PhysicalRegion
 
 logger = logging.getLogger(__name__)
 
@@ -133,15 +134,24 @@ class PhysicalRegionFusionEngine:
 
         return False
 
-    def fuse_detections(self, detections: List[Dict[str, Any]], img_width: int, img_height: int) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    def fuse_detections(
+        self,
+        detections: List[Dict[str, Any]],
+        img_size: Any = (300, 600),
+        person_instances: Optional[List[Dict[str, Any]]] = None
+    ) -> List[PhysicalRegion]:
         """
         Fuses multi-model candidate detections into unique physical regions.
-        Returns (fused_regions: List[Dict], discarded_log: List[Dict]).
+        Returns List[PhysicalRegion].
         """
-        if not detections:
-            return [], []
+        if isinstance(img_size, (tuple, list)):
+            img_width, img_height = int(img_size[0]), int(img_size[1])
+        else:
+            img_width, img_height = int(img_size), int(person_instances) if isinstance(person_instances, (int, float)) else 600
 
-        discarded_log = []
+        if not detections:
+            return []
+
         valid_dets = []
 
         # Filter out non-clothing or zero-area noise
@@ -164,16 +174,11 @@ class PhysicalRegionFusionEngine:
             assigned = False
             for cluster in clusters:
                 rep_det = cluster[0]
-                
+
                 # Check part-of parent
                 if self.is_part_of_parent(det, rep_det):
                     cluster.append(det)
                     assigned = True
-                    discarded_log.append({
-                        "detection": det,
-                        "reason": "PART_OF_PARENT_GARMENT",
-                        "details": f"Part of parent cluster {rep_det.get('label')}"
-                    })
                     break
 
                 fusion_score = self.calculate_fusion_score(det, rep_det)
@@ -185,14 +190,14 @@ class PhysicalRegionFusionEngine:
             if not assigned:
                 clusters.append([det])
 
-        fused_regions: List[Dict[str, Any]] = []
+        fused_regions: List[PhysicalRegion] = []
 
         for idx, cluster in enumerate(clusters, start=1):
             region_id = f"region_{idx}"
 
             boxes = np.array([d["box"] for d in cluster])
             cats = [ItemTaxonomyService.derive_category_group(ItemTaxonomyService.normalize_item_type(d.get("label", ""))) for d in cluster]
-            
+
             if "footwear" in cats and len(cluster) > 1:
                 # Pairwise footwear bounding box spanning both shoes
                 fused_box = [
@@ -220,25 +225,29 @@ class PhysicalRegionFusionEngine:
                 canonical_type = ItemTaxonomyService.normalize_item_type(raw_label)
                 candidate_labels.append({"type": canonical_type, "score": score, "raw_label": raw_label})
 
-            top_type = candidate_labels[0]["type"] if candidate_labels else "casual_shirt"
+            top_type = candidate_labels[0]["type"] if candidate_labels else "unknown"
             category_group = ItemTaxonomyService.derive_category_group(top_type)
             physical_layer = ItemTaxonomyService.derive_physical_layer(top_type)
 
-            fused_regions.append({
-                "region_id": region_id,
-                "person_id": cluster[0].get("person_id", "person_001"),
-                "bbox": fused_box,
-                "category_group": category_group,
-                "garment_type": top_type,
-                "physical_layer": physical_layer,
-                "candidate_labels": candidate_labels,
-                "models_detected": models_detected,
-                "cluster_size": len(cluster),
-                "provenance": {
+            person_id = cluster[0].get("person_id", "person_001")
+
+            region_obj = PhysicalRegion(
+                region_id=region_id,
+                person_id=person_id,
+                category_group=category_group,
+                garment_type=top_type,
+                physical_layer=physical_layer,
+                bbox=fused_box,
+                category_hint=category_group,
+                models_detected=models_detected,
+                provenance={
                     "source_models": models_detected,
                     "cluster_size": len(cluster),
                     "top_type": top_type
                 }
-            })
+            )
+            region_obj.candidate_labels = candidate_labels
+            region_obj.fusion_score = 0.88
+            fused_regions.append(region_obj)
 
-        return fused_regions, discarded_log
+        return fused_regions

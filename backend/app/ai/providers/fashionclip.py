@@ -13,6 +13,8 @@ import socket
 import os
 import logging
 
+from app.ai.taxonomy.item_taxonomy import ItemTaxonomyService
+
 logger = logging.getLogger(__name__)
 
 CANDIDATES = {
@@ -129,7 +131,8 @@ class FashionCLIPProvider:
         """
         Ranks candidate item types for crop. Returns [(item_type, score), ...] or [] if model is unavailable.
         """
-        candidates = CANDIDATES.get(category_hint, CANDIDATES.get("upper_body", []))
+        group_key = category_hint if category_hint in CANDIDATES else ItemTaxonomyService.derive_category_group(category_hint)
+        candidates = CANDIDATES.get(group_key, CANDIDATES.get("upper_body", []))
         labels = [item_type for item_type, prompt in candidates]
         prompts = [prompt for item_type, prompt in candidates]
 

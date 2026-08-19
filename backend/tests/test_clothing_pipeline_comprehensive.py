@@ -59,7 +59,7 @@ class TestTierAUnitAndIntegrationSuite:
         assert fusion_score == 0.0
 
         engine = PhysicalRegionFusionEngine()
-        fused, _ = engine.fuse_detections([tshirt_det, blazer_det], 300, 600)
+        fused = engine.fuse_detections([tshirt_det, blazer_det], (300, 600))
         assert len(fused) == 2
 
     def test_invariant_4_multiple_detections_same_garment_collapse_to_one(self):

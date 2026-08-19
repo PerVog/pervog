@@ -11,7 +11,7 @@ const CATEGORIES = [
 
 const COLORS = [
   'navy', 'dark navy', 'black', 'charcoal', 'dark grey', 'grey', 'brown', 'dark brown', 'white', 'cream', 'beige', 'khaki',
-  'blue', 'light blue', 'green', 'olive', 'red', 'burgundy', 'pink', 'yellow', 'orange'
+  'blue', 'light blue', 'green', 'olive', 'red', 'burgundy', 'pink', 'yellow', 'orange', 'unknown'
 ];
 
 const FIT_OPTIONS = ['skinny', 'slim', 'regular', 'straight', 'relaxed', 'oversized'];
@@ -26,24 +26,24 @@ export default function AddClothing({ setActiveTab }) {
   // Overall Outfit Context State
   const [overallOutfit, setOverallOutfit] = useState(null);
 
-  // Single Item State
+  // Single Item State (No hardcoded Casual Shirt / white defaults)
   const [metadata, setMetadata] = useState({
     region_id: 'region_1',
     title: '',
-    category: 'Casual Shirt',
-    subcategory: 'Casual Shirt',
-    primary_color: 'white',
-    color_hex: '#FFFFFF',
-    pattern: 'solid',
-    material: 'cotton',
+    category: '',
+    subcategory: '',
+    primary_color: '',
+    color_hex: '#000000',
+    pattern: 'unknown',
+    material: 'unknown',
     fit: 'regular',
     style: 'casual',
     formality: 3,
-    confidence: 0.85,
+    confidence: 0.0,
     needs_confirmation: false,
     crop_url: null,
     warmth: 1,
-    occasions: ['casual', 'college', 'outing'],
+    occasions: ['casual'],
     condition: 'good'
   });
 
@@ -84,19 +84,20 @@ export default function AddClothing({ setActiveTab }) {
         // Multi-item photo detected
         const formattedMulti = analysisRes.items.map((item, idx) => {
           const regionId = item.region_id || item.id || `region_${idx + 1}`;
-          const itemTypeVal = item.item_type?.value || item.item_type || 'casual_shirt';
+          const itemTypeVal = item.garment_type || item.item_type?.value || 'unknown';
           const displayName = item.display_name || item.category || 'Clothing Item';
-          const colorName = item.color?.primary || item.primary_color?.value || 'navy';
+          const colorName = item.color?.primary || 'unknown';
           const formalityScore = item.formality?.value ?? item.formality?.score ?? 3;
           
-          // STEP 3 HARD RULE: Render ONLY item.crop_url. NEVER fallback to serverImageUrl or originalImage.
           const validCropUrl = item.crop_url || item.image_url || null;
+          const colorPrefix = colorName && colorName !== 'unknown' ? colorName.charAt(0).toUpperCase() + colorName.slice(1) : '';
+          const itemTitle = item.title || (colorPrefix ? `${colorPrefix} ${displayName}` : displayName);
 
           return {
             id: regionId,
             region_id: regionId,
             selected: true,
-            title: item.title || `${colorName} ${displayName}`,
+            title: itemTitle,
             category: displayName,
             crop_url: validCropUrl,
             image_failed: false,
@@ -104,13 +105,13 @@ export default function AddClothing({ setActiveTab }) {
               item_type: itemTypeVal,
               subcategory: displayName,
               primary_color: colorName,
-              color_hex: item.color_hex || (colorName === 'white' ? '#FFFFFF' : '#0A192F'),
-              pattern: item.pattern?.value || 'solid',
-              material: item.material?.value || 'cotton',
+              color_hex: item.color_hex || '#000000',
+              pattern: item.pattern?.value || 'unknown',
+              material: item.material?.value || 'unknown',
               fit: item.fit?.value || 'regular',
               style: item.style?.value || analysisRes.overall_outfit?.style || 'casual',
               formality: formalityScore,
-              confidence: item.item_type?.confidence || item.confidence || 0.85,
+              confidence: item.confidence || 0.0,
               needs_confirmation: item.needs_confirmation || false,
               warmth: 1,
               occasions: analysisRes.overall_outfit?.occasion || ['casual'],
@@ -124,24 +125,26 @@ export default function AddClothing({ setActiveTab }) {
       } else {
         // Single item photo
         const primaryItem = (analysisRes.items && analysisRes.items[0]) || {};
-        const displayName = primaryItem.display_name || analysisRes.category?.value || 'Casual Shirt';
-        const colorName = primaryItem.color?.primary || analysisRes.primary_color?.value || 'white';
-        const formalityScore = primaryItem.formality?.value ?? analysisRes.formality?.value ?? 3;
+        const displayName = primaryItem.display_name || primaryItem.category || 'Clothing Item';
+        const colorName = primaryItem.color?.primary || 'unknown';
+        const formalityScore = primaryItem.formality?.value ?? 3;
         const validCropUrl = primaryItem.crop_url || primaryItem.image_url || null;
+        const colorPrefix = colorName && colorName !== 'unknown' ? colorName.charAt(0).toUpperCase() + colorName.slice(1) : '';
+        const itemTitle = primaryItem.title || (colorPrefix ? `${colorPrefix} ${displayName}` : displayName);
 
         setMetadata({
           region_id: primaryItem.region_id || 'region_1',
-          title: primaryItem.title || `${colorName} ${displayName}`,
+          title: itemTitle,
           category: displayName,
           subcategory: displayName,
           primary_color: colorName,
-          color_hex: primaryItem.color_hex || (colorName === 'white' ? '#FFFFFF' : '#0A192F'),
-          pattern: primaryItem.pattern?.value || analysisRes.pattern?.value || 'solid',
-          material: primaryItem.material?.value || analysisRes.material?.value || 'cotton',
-          fit: primaryItem.fit?.value || analysisRes.fit?.value || 'regular',
+          color_hex: primaryItem.color_hex || '#000000',
+          pattern: primaryItem.pattern?.value || 'unknown',
+          material: primaryItem.material?.value || 'unknown',
+          fit: primaryItem.fit?.value || 'regular',
           style: primaryItem.style?.value || analysisRes.overall_outfit?.style || 'casual',
           formality: formalityScore,
-          confidence: primaryItem.confidence || analysisRes.confidence || 0.85,
+          confidence: primaryItem.confidence || 0.0,
           needs_confirmation: primaryItem.needs_confirmation || false,
           crop_url: validCropUrl,
           warmth: 1,
@@ -396,7 +399,6 @@ export default function AddClothing({ setActiveTab }) {
                   <span className="color-dot" style={{ backgroundColor: item.metadata.color_hex }} title={item.metadata.primary_color} />
                 </div>
 
-                {/* STEP 3 HARD RULE: Render ONLY item.crop_url. NEVER fallback to serverImageUrl or originalImage. */}
                 {item.crop_url && !item.image_failed ? (
                   <img
                     src={item.crop_url}
@@ -429,7 +431,7 @@ export default function AddClothing({ setActiveTab }) {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    justify: 'center',
+                    justifyContent: 'center',
                     color: '#FCA5A5',
                     fontSize: '0.85rem',
                     fontWeight: 700,
@@ -449,7 +451,7 @@ export default function AddClothing({ setActiveTab }) {
                     Formality: {item.metadata.formality}/10
                   </span>
                   <span className="badge" style={{ background: 'rgba(255,255,255,0.08)', color: '#9CA3AF' }}>
-                    {Math.round((item.metadata.confidence || 0.85) * 100)}% Conf.
+                    {Math.round((item.metadata.confidence || 0.0) * 100)}% Conf.
                   </span>
                 </div>
 
