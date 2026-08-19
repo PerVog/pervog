@@ -1,0 +1,34 @@
+{
+  "grounding_dino": {
+    "status": "unavailable",
+    "error": null
+  },
+  "florence_2": {
+    "status": "unavailable",
+    "error": "'Florence2LanguageConfig' object has no attribute 'forced_bos_token_id'"
+  },
+  "deepfashion2": {
+    "status": "unavailable",
+    "error": "DeepFashion2 YOLO checkpoint unavailable: No module named 'ultralytics'"
+  },
+  "sam2": {
+    "status": "available",
+    "error": null
+  },
+  "fashionclip": {
+    "status": "available",
+    "mode": "fashion_clip",
+    "error": null
+  },
+  "qwen2_5_vl": {
+    "status": "unavailable",
+    "error": "cannot import name 'AutoModelForVision2Seq' from 'transformers' (C:\\Users\\prajjwal\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\transformers\\__init__.py)"
+  },
+  "garment_attributes": {
+    "status": "available",
+    "error": null
+  },
+  "footwear_classifier": {
+    "status": "available"
+  }
+}

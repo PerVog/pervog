@@ -9,6 +9,7 @@ from typing import Dict, Any, Tuple
 from PIL import Image
 import numpy as np
 import cv2
+import socket
 import torch
 import logging
 
@@ -20,10 +21,13 @@ class SAM2Provider:
         self.model = None
         self.processor = None
         self.available = False
+        self.error_reason = None
         self._load_model()
 
     def _load_model(self):
+        orig_timeout = socket.getdefaulttimeout()
         try:
+            socket.setdefaulttimeout(3.0)
             from transformers import SamModel, SamProcessor
             self.processor = SamProcessor.from_pretrained("facebook/sam-vit-base")
             self.model = SamModel.from_pretrained("facebook/sam-vit-base")
@@ -33,8 +37,11 @@ class SAM2Provider:
             self.available = True
             logger.info("SAM 2.1 / SAM model initialized successfully.")
         except Exception as e:
-            logger.warning(f"SAM 2.1 not available natively: {e}. Utilizing OpenCV GrabCut / saliency mask fallback.")
+            self.error_reason = str(e)
             self.available = False
+            logger.info(f"SAM 2.1 not available natively: {e}. Utilizing OpenCV GrabCut segmentation fallback.")
+        finally:
+            socket.setdefaulttimeout(orig_timeout)
 
     def generate_mask(self, image: Image.Image, box: Tuple[int, int, int, int]) -> Dict[str, Any]:
         """

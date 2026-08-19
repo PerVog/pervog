@@ -1,12 +1,12 @@
 """
-Physical Region Fusion Engine — Physical Object Existence Check, Multi-Signal Region Fusion, Part-of-Object Detection, and Pairwise Footwear Deduplication.
+Physical Region Fusion Engine — Semantic Layer Awareness & Composite Fusion Score Matrix.
 
 Implements:
-1. Physical Object Existence Check (filtering fragments / non-wearable region noise)
-2. Multi-Signal Part-Of-Object Detection (containment + area ratio + boundary cues + category semantics)
-3. Pairwise Footwear Fusion (left shoe + right shoe -> single footwear pair region)
-4. Category-aware Minimum Object Size Thresholding (MIN_MASK_AREA_RATIO, MIN_BBOX_SIZE)
-5. Multi-Feature Physical Similarity Score (IoU, containment, center distance, DINOv2/SigLIP embeddings, semantic compatibility)
+1. Multi-Feature Physical Fusion Score (semantic compatibility + layer compatibility + mask overlap + bbox overlap + center distance + area similarity)
+2. Layer Separation Invariant: Different physical layers (inner vs outer, e.g. t-shirt vs blazer) NEVER merge regardless of IoU overlap.
+3. Garment Collapse Invariant: Multiple model detections for the same physical garment collapse into ONE region.
+4. Part-of-Object Filtering (sleeves, collars, pant legs).
+5. Pairwise Footwear Fusion (left shoe + right shoe -> footwear pair).
 """
 
 from typing import List, Dict, Any, Tuple, Optional
@@ -16,14 +16,6 @@ import logging
 from app.ai.taxonomy.item_taxonomy import ItemTaxonomyService
 
 logger = logging.getLogger(__name__)
-
-# Category-aware Minimum Object Size Thresholds
-CATEGORY_MIN_BOUNDS = {
-    "upper_body": {"min_bbox_ratio": 0.04, "min_area_pixels": 4000},
-    "lower_body": {"min_bbox_ratio": 0.04, "min_area_pixels": 4000},
-    "footwear":   {"min_bbox_ratio": 0.008, "min_area_pixels": 600},
-    "accessory":  {"min_bbox_ratio": 0.003, "min_area_pixels": 250}
-}
 
 def calculate_iou(boxA: List[int], boxB: List[int]) -> float:
     xA = max(boxA[0], boxB[0])
@@ -49,7 +41,6 @@ def calculate_containment(boxA: List[int], boxB: List[int]) -> float:
     return interArea / float(boxAArea)
 
 def calculate_center_distance(boxA: List[int], boxB: List[int]) -> float:
-    """Calculates Euclidean distance between bounding box centers relative to average box diagonal."""
     cA = [(boxA[0] + boxA[2]) / 2.0, (boxA[1] + boxA[3]) / 2.0]
     cB = [(boxB[0] + boxB[2]) / 2.0, (boxB[1] + boxB[3]) / 2.0]
 
@@ -61,118 +52,86 @@ def calculate_center_distance(boxA: List[int], boxB: List[int]) -> float:
 
 class PhysicalRegionFusionEngine:
     @staticmethod
-    def physical_object_existence_check(det: Dict[str, Any], img_width: int, img_height: int) -> bool:
+    def calculate_fusion_score(detA: Dict[str, Any], detB: Dict[str, Any]) -> float:
         """
-        Physical Object Existence Check (Stage 1).
-        Verifies whether a candidate detection corresponds to an independently wearable garment object
-        rather than a crop fragment or noise.
+        Calculates multi-feature composite Fusion Score between two detections.
+        Returns score in range [0.0, 1.0].
         """
-        box = det["box"]
-        box_w = box[2] - box[0]
-        box_h = box[3] - box[1]
-
-        if box_w <= 0 or box_h <= 0:
-            return False
-
-        label = det.get("label", "clothing item")
-        cat = ItemTaxonomyService.derive_category(label)
-        box_area = box_w * box_h
-        img_area = img_width * img_height
-
-        # Rule: Misclassified shirt label on bottom footwear plane (y1 > 75% img_height) is a fragment
-        if cat == "upper_body" and box[1] > 0.70 * img_height and box_h < 0.25 * img_height:
-            return False
-
-        # Rule: Misclassified jeans/trousers label on narrow collar/accessory patch (< 3% img_area) is a fragment
-        if label in ["jeans", "trousers", "suit_trousers"] and box_area < 0.03 * img_area and box_h < 0.15 * img_height:
-            return False
-
-        return True
-
-    @staticmethod
-    def is_part_of_parent(child_det: Dict[str, Any], parent_det: Dict[str, Any]) -> bool:
-        """
-        Multi-Signal Object-Part Detection (Stage 2).
-        Uses containment + relative area ratio + category semantics + position to identify object parts.
-        NOTE: Bounding box containment alone NEVER discards a candidate (e.g. tie inside suit jacket, belt on waist).
-        """
-        boxChild = child_det["box"]
-        boxParent = parent_det["box"]
-
-        child_area = (boxChild[2] - boxChild[0]) * (boxChild[3] - boxChild[1])
-        parent_area = (boxParent[2] - boxParent[0]) * (boxParent[3] - boxParent[1])
-
-        # Child must be smaller than parent (< 50% area)
-        if child_area >= 0.50 * parent_area:
-            return False
-
-        containment = calculate_containment(boxChild, boxParent)
-        label_child = child_det.get("label", "")
-        cat_child = ItemTaxonomyService.derive_category(label_child)
-        cat_parent = ItemTaxonomyService.derive_category(parent_det.get("label", ""))
-
-        # Legitimate overlapping accessories (tie, belt, watch) with strong score are preserved unless area is tiny
-        if cat_child == "accessory" and cat_parent in ["upper_body", "lower_body"]:
-            # False belt/shirt detail on trousers (e.g. waist crease or trouser crop labelled belt)
-            if label_child in ["belt", "casual_shirt"] and cat_parent == "lower_body" and child_area < 0.30 * parent_area:
-                # If child score is low (< 0.75) and contained inside trousers (> 70%), it's a trouser part
-                if child_det.get("score", 0.8) < 0.80 and containment >= 0.70:
-                    return True
-            return False
-
-        # If child shares category with parent and is mostly contained (> 75%)
-        if containment >= 0.75:
-            if cat_child == cat_parent:
-                return True
-            if child_area < 0.20 * parent_area:
-                return True
-
-        return False
-
-    @staticmethod
-    def physical_similarity_score(detA: Dict[str, Any], detB: Dict[str, Any]) -> float:
-        """
-        Computes physical similarity score between two candidate detections.
-        Takes into account IoU, containment, center distance, and semantic category compatibility.
-        """
-        boxA = detA["box"]
-        boxB = detB["box"]
+        # Invariant: Different person_id -> FusionScore = 0.0
+        if detA.get("person_id") != detB.get("person_id") and detA.get("person_id") and detB.get("person_id"):
+            return 0.0
 
         labelA = detA.get("label", "clothing item")
         labelB = detB.get("label", "clothing item")
 
-        catA = ItemTaxonomyService.derive_category(labelA)
-        catB = ItemTaxonomyService.derive_category(labelB)
+        typeA = ItemTaxonomyService.normalize_item_type(labelA)
+        typeB = ItemTaxonomyService.normalize_item_type(labelB)
 
-        # RULE: Accessories (tie, belt, watch) overlapping upper/lower body items are DISTINCT physical objects unless part-of
-        if (catA == "accessory" and catB != "accessory") or (catB == "accessory" and catA != "accessory"):
+        groupA = ItemTaxonomyService.derive_category_group(typeA)
+        groupB = ItemTaxonomyService.derive_category_group(typeB)
+
+        layerA = ItemTaxonomyService.derive_physical_layer(typeA)
+        layerB = ItemTaxonomyService.derive_physical_layer(typeB)
+
+        # Invariant 3: Different physical layers (inner vs outer, upper vs lower) -> FusionScore = 0.0
+        if layerA != layerB and (layerA in ["inner", "outer"] and layerB in ["inner", "outer"]):
             return 0.0
 
-        # RULE: Footwear overlapping lower body items (pants/trousers) are DISTINCT physical objects
-        if (catA == "footwear" and catB == "lower_body") or (catB == "footwear" and catA == "lower_body"):
-            return 0.0
+        if groupA != groupB:
+            if not (groupA in ["upper_body", "outerwear"] and groupB in ["upper_body", "outerwear"]):
+                return 0.0
 
-        # Section 10: Pairwise Footwear Fusion (left shoe + right shoe -> one footwear pair region)
-        if catA == "footwear" and catB == "footwear":
+        boxA = detA["box"]
+        boxB = detB["box"]
+
+        # Footwear pair fusion special case
+        if groupA == "footwear" and groupB == "footwear":
             center_dist = calculate_center_distance(boxA, boxB)
-            # If two footwear items are on same lower plane and reasonably close (< 1.25 diagonal distance), fuse into pair
-            if center_dist <= 1.25:
+            if center_dist <= 1.20:
                 return 0.85
 
         iou = calculate_iou(boxA, boxB)
         containment = max(calculate_containment(boxA, boxB), calculate_containment(boxB, boxA))
         center_dist = calculate_center_distance(boxA, boxB)
 
-        # Base geometric score
-        geo_score = 0.50 * iou + 0.35 * containment + 0.15 * max(0.0, 1.0 - center_dist)
+        areaA = max(1, (boxA[2] - boxA[0]) * (boxA[3] - boxA[1]))
+        areaB = max(1, (boxB[2] - boxB[0]) * (boxB[3] - boxB[1]))
+        area_sim = min(areaA, areaB) / float(max(areaA, areaB))
 
-        # Semantic category multiplier
-        if catA == catB:
-            cat_bonus = 0.20
-        else:
-            cat_bonus = -0.10
+        # Weights for fusion score calculation
+        score = 0.40 * iou + 0.30 * containment + 0.15 * (1.0 - min(1.0, center_dist)) + 0.15 * area_sim
 
-        return max(0.0, min(1.0, geo_score + cat_bonus))
+        if typeA == typeB:
+            score += 0.15
+
+        return float(max(0.0, min(1.0, score)))
+
+    @staticmethod
+    def is_part_of_parent(child_det: Dict[str, Any], parent_det: Dict[str, Any]) -> bool:
+        """Determines whether child_det is a crop fragment/part of parent_det."""
+        boxChild = child_det["box"]
+        boxParent = parent_det["box"]
+
+        child_area = (boxChild[2] - boxChild[0]) * (boxChild[3] - boxChild[1])
+        parent_area = (boxParent[2] - boxParent[0]) * (boxParent[3] - boxParent[1])
+
+        if child_area >= 0.50 * parent_area:
+            return False
+
+        containment = calculate_containment(boxChild, boxParent)
+        label_child = child_det.get("label", "")
+        label_parent = parent_det.get("label", "")
+
+        type_child = ItemTaxonomyService.normalize_item_type(label_child)
+        type_parent = ItemTaxonomyService.normalize_item_type(label_parent)
+
+        cat_child = ItemTaxonomyService.derive_category_group(type_child)
+        cat_parent = ItemTaxonomyService.derive_category_group(type_parent)
+
+        if containment >= 0.75 and cat_child == cat_parent and child_area < 0.25 * parent_area:
+            return True
+
+        return False
 
     def fuse_detections(self, detections: List[Dict[str, Any]], img_width: int, img_height: int) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
         """
@@ -182,37 +141,23 @@ class PhysicalRegionFusionEngine:
         if not detections:
             return [], []
 
-        discarded_log: List[Dict[str, Any]] = []
-        valid_detections: List[Dict[str, Any]] = []
-        img_area = img_width * img_height
+        discarded_log = []
+        valid_dets = []
 
-        # Stage 1: Physical Object Existence Check & Category-Aware Minimum Size Filter
+        # Filter out non-clothing or zero-area noise
         for det in detections:
-            if not self.physical_object_existence_check(det, img_width, img_height):
-                discarded_log.append({
-                    "detection": det,
-                    "reason": "PHYSICAL_OBJECT_EXISTENCE_FAILED",
-                    "details": "Failed existence check (misclassified fragment or non-garment patch)"
-                })
-                continue
-
             box = det["box"]
-            box_area = max(1, (box[2] - box[0]) * (box[3] - box[1]))
-            box_ratio = box_area / float(img_area)
-            cat = ItemTaxonomyService.derive_category(det.get("label", ""))
-
-            thresh = CATEGORY_MIN_BOUNDS.get(cat, CATEGORY_MIN_BOUNDS["accessory"])
-            if box_ratio < thresh["min_bbox_ratio"] or box_area < thresh["min_area_pixels"]:
-                discarded_log.append({
-                    "detection": det,
-                    "reason": "MIN_OBJECT_SIZE_FILTER",
-                    "details": f"box_ratio={box_ratio:.4f} < {thresh['min_bbox_ratio']}, area={box_area} < {thresh['min_area_pixels']}"
-                })
+            w = box[2] - box[0]
+            h = box[3] - box[1]
+            if w <= 0 or h <= 0:
                 continue
-            valid_detections.append(det)
+            lbl = det.get("label", "").lower()
+            if lbl in ["person", "man", "woman", "human"]:
+                continue
+            valid_dets.append(det)
 
         # Sort detections by score descending
-        sorted_dets = sorted(valid_detections, key=lambda d: d.get("score", 0.0), reverse=True)
+        sorted_dets = sorted(valid_dets, key=lambda d: d.get("score", 0.0), reverse=True)
         clusters: List[List[Dict[str, Any]]] = []
 
         for det in sorted_dets:
@@ -220,19 +165,19 @@ class PhysicalRegionFusionEngine:
             for cluster in clusters:
                 rep_det = cluster[0]
                 
-                # Multi-Signal Part-Of Object Detection (Stage 2)
+                # Check part-of parent
                 if self.is_part_of_parent(det, rep_det):
                     cluster.append(det)
                     assigned = True
                     discarded_log.append({
                         "detection": det,
-                        "reason": "OBJECT_PART_OF_PARENT",
+                        "reason": "PART_OF_PARENT_GARMENT",
                         "details": f"Part of parent cluster {rep_det.get('label')}"
                     })
                     break
 
-                sim_score = self.physical_similarity_score(det, rep_det)
-                if sim_score >= 0.60:
+                fusion_score = self.calculate_fusion_score(det, rep_det)
+                if fusion_score >= 0.55:
                     cluster.append(det)
                     assigned = True
                     break
@@ -246,10 +191,10 @@ class PhysicalRegionFusionEngine:
             region_id = f"region_{idx}"
 
             boxes = np.array([d["box"] for d in cluster])
-            cats = [ItemTaxonomyService.derive_category(d.get("label", "")) for d in cluster]
+            cats = [ItemTaxonomyService.derive_category_group(ItemTaxonomyService.normalize_item_type(d.get("label", ""))) for d in cluster]
             
             if "footwear" in cats and len(cluster) > 1:
-                # Pairwise Footwear Fusion box spanning both shoes
+                # Pairwise footwear bounding box spanning both shoes
                 fused_box = [
                     int(np.min(boxes[:, 0])),
                     int(np.min(boxes[:, 1])),
@@ -257,12 +202,9 @@ class PhysicalRegionFusionEngine:
                     int(np.max(boxes[:, 3]))
                 ]
             else:
-                fused_box = [
-                    int(np.mean(boxes[:, 0])),
-                    int(np.mean(boxes[:, 1])),
-                    int(np.mean(boxes[:, 2])),
-                    int(np.mean(boxes[:, 3]))
-                ]
+                # Pick box from highest scoring detection in cluster to preserve tight fit
+                highest_det = max(cluster, key=lambda d: d.get("score", 0.0))
+                fused_box = list(highest_det["box"])
 
             fused_box[0] = max(0, fused_box[0])
             fused_box[1] = max(0, fused_box[1])
@@ -279,15 +221,24 @@ class PhysicalRegionFusionEngine:
                 candidate_labels.append({"type": canonical_type, "score": score, "raw_label": raw_label})
 
             top_type = candidate_labels[0]["type"] if candidate_labels else "casual_shirt"
-            category_hint = ItemTaxonomyService.derive_category(top_type)
+            category_group = ItemTaxonomyService.derive_category_group(top_type)
+            physical_layer = ItemTaxonomyService.derive_physical_layer(top_type)
 
             fused_regions.append({
                 "region_id": region_id,
+                "person_id": cluster[0].get("person_id", "person_001"),
                 "bbox": fused_box,
-                "category_hint": category_hint,
+                "category_group": category_group,
+                "garment_type": top_type,
+                "physical_layer": physical_layer,
                 "candidate_labels": candidate_labels,
                 "models_detected": models_detected,
-                "cluster_size": len(cluster)
+                "cluster_size": len(cluster),
+                "provenance": {
+                    "source_models": models_detected,
+                    "cluster_size": len(cluster),
+                    "top_type": top_type
+                }
             })
 
         return fused_regions, discarded_log

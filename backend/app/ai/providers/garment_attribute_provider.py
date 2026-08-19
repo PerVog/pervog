@@ -1,15 +1,15 @@
 """
-Garment Attribute Provider — Fine-Grained Fashionpedia Garment Attribute Classifier.
+Garment Attribute Provider — Fine-Grained Garment Attribute Classifier.
 
-Uses resoa/garment-attributes or pretrained fashion visual feature extractors.
-Predicts fine-grained garment attributes (silhouette, sleeve, collar, neckline, pockets, pattern, texture)
-on INDIVIDUAL SEGMENTED ITEM CROPS.
+Predicts fine-grained garment attributes on segmented item crops when model is available.
+Returns empty attribute dictionary when unavailable.
+NEVER generates synthetic attribute predictions.
 """
 
 from typing import Dict, Any, List
 from PIL import Image
 import torch
-import numpy as np
+import socket
 import logging
 
 logger = logging.getLogger(__name__)
@@ -20,10 +20,13 @@ class GarmentAttributeProvider:
         self.model = None
         self.processor = None
         self.available = False
+        self.error_reason = None
         self._load_model()
 
     def _load_model(self):
+        orig_timeout = socket.getdefaulttimeout()
         try:
+            socket.setdefaulttimeout(3.0)
             from transformers import AutoImageProcessor, AutoModelForImageClassification
             self.processor = AutoImageProcessor.from_pretrained(self.model_id)
             self.model = AutoModelForImageClassification.from_pretrained(self.model_id)
@@ -31,10 +34,13 @@ class GarmentAttributeProvider:
                 self.model = self.model.to("cuda")
             self.model.eval()
             self.available = True
-            logger.info("Garment Attribute model (resoa/garment-attributes) initialized successfully.")
+            logger.info("Garment Attribute model initialized successfully.")
         except Exception as e:
-            logger.warning(f"Garment Attribute model not available natively: {e}. Utilizing feature-aware attribute fallback engine.")
+            self.error_reason = str(e)
             self.available = False
+            logger.info(f"Garment Attribute model unavailable: {self.error_reason}")
+        finally:
+            socket.setdefaulttimeout(orig_timeout)
 
     def predict_attributes(self, crop: Image.Image) -> Dict[str, Any]:
         """Predicts fine-grained fashion attributes on individual segmented item crop."""
@@ -62,15 +68,7 @@ class GarmentAttributeProvider:
             except Exception as e:
                 logger.error(f"Garment attribute inference error: {e}")
 
-        # Feature-aware fallback
-        crop_np = np.array(crop.convert("RGB"))
-        std_val = float(np.std(crop_np))
-        pattern = "patterned" if std_val > 45.0 else "solid"
-
         return {
-            "attributes": [
-                {"attribute": pattern, "score": 0.85},
-                {"attribute": "cotton construction", "score": 0.80}
-            ],
-            "top_attribute": pattern
+            "attributes": [],
+            "top_attribute": "unknown"
         }

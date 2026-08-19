@@ -1,14 +1,16 @@
 """
-FashionCLIP Provider — Zero-Shot Fashion Classification and Ranking Engine.
+FashionCLIP Provider — Specialized Fashion Candidate Ranking Engine.
 
-Uses FashionCLIP / CLIP zero-shot image-text similarity scoring to rank candidate labels
-per segmented region crop.
+Ranks candidate item types using zero-shot image-text similarity scoring.
+Operates according to explicit CLASSIFIER_MODE configuration ("fashion_clip" vs "generic_clip").
+Never silently substitutes generic CLIP as FashionCLIP.
 """
 
 from typing import List, Dict, Any, Tuple
 from PIL import Image
 import torch
-import numpy as np
+import socket
+import os
 import logging
 
 logger = logging.getLogger(__name__)
@@ -25,6 +27,19 @@ CANDIDATES = {
         ("sweater", "a knitted sweater"),
         ("casual_jacket", "a casual jacket")
     ],
+    "outerwear": [
+        ("suit_jacket", "a formal suit jacket"),
+        ("blazer", "a formal blazer jacket"),
+        ("coat", "a formal overcoat"),
+        ("casual_jacket", "a casual jacket"),
+        ("hoodie", "a hooded jacket or sweater")
+    ],
+    "full_body": [
+        ("dress", "a woman dress"),
+        ("saree", "an Indian saree garment"),
+        ("kurta", "an ethnic kurta garment"),
+        ("jumpsuit", "a full body jumpsuit")
+    ],
     "lower_body": [
         ("suit_trousers", "formal matching suit trousers"),
         ("formal_trousers", "formal dress trousers"),
@@ -34,7 +49,8 @@ CANDIDATES = {
         ("jeans", "blue denim jeans"),
         ("cargo_pants", "casual cargo pants"),
         ("joggers", "athletic sweatpants joggers"),
-        ("shorts", "casual shorts")
+        ("shorts", "casual shorts"),
+        ("skirt", "a skirt")
     ],
     "footwear": [
         ("formal_shoes", "formal leather dress shoes"),
@@ -58,50 +74,81 @@ CANDIDATES = {
 }
 
 class FashionCLIPProvider:
-    def __init__(self):
+    def __init__(self, mode: str = None):
+        self.mode = mode or os.getenv("CLASSIFIER_MODE", "fashion_clip")
         self.model = None
         self.processor = None
         self.available = False
+        self.error_reason = None
+
+        if self.mode == "fashion_clip":
+            self.model_id = "patrickjohncyh/fashion-clip"
+        else:
+            self.model_id = "openai/clip-vit-base-patch32"
+
         self._load_model()
 
     def _load_model(self):
+        orig_timeout = socket.getdefaulttimeout()
         try:
+            socket.setdefaulttimeout(3.0)
             from transformers import CLIPProcessor, CLIPModel
-            self.processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
-            self.model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+            self.processor = CLIPProcessor.from_pretrained(self.model_id, local_files_only=False)
+            self.model = CLIPModel.from_pretrained(self.model_id, local_files_only=False)
             if torch.cuda.is_available():
                 self.model = self.model.to("cuda")
             self.model.eval()
             self.available = True
-            logger.info("FashionCLIP / CLIP initialized successfully.")
+            logger.info(f"FashionCLIP Provider ({self.mode}: {self.model_id}) initialized successfully.")
         except Exception as e:
-            logger.warning(f"FashionCLIP not available natively: {e}. Utilizing zero-shot ranking fallback.")
+            if self.mode == "fashion_clip":
+                try:
+                    from transformers import CLIPProcessor, CLIPModel
+                    fallback_id = "openai/clip-vit-base-patch32"
+                    self.processor = CLIPProcessor.from_pretrained(fallback_id)
+                    self.model = CLIPModel.from_pretrained(fallback_id)
+                    if torch.cuda.is_available():
+                        self.model = self.model.to("cuda")
+                    self.model.eval()
+                    self.available = True
+                    self.mode = "generic_clip"
+                    self.model_id = fallback_id
+                    logger.info(f"Explicit fallback to generic CLIP ({fallback_id}) logged.")
+                    return
+                except Exception as e2:
+                    self.error_reason = f"{e}; Fallback error: {e2}"
+            else:
+                self.error_reason = str(e)
+            
             self.available = False
+            logger.info(f"FashionCLIP provider ({self.mode}) unavailable: {self.error_reason}")
+        finally:
+            socket.setdefaulttimeout(orig_timeout)
 
     def rank_candidates(self, crop: Image.Image, category_hint: str) -> List[Tuple[str, float]]:
         """
-        Ranks candidate item types for the specified crop and returns [(item_type, score), ...] sorted descending.
+        Ranks candidate item types for crop. Returns [(item_type, score), ...] or [] if model is unavailable.
         """
-        candidates = CANDIDATES.get(category_hint, CANDIDATES["upper_body"])
+        candidates = CANDIDATES.get(category_hint, CANDIDATES.get("upper_body", []))
         labels = [item_type for item_type, prompt in candidates]
         prompts = [prompt for item_type, prompt in candidates]
 
-        if self.available and self.model is not None and self.processor is not None:
-            try:
-                inputs = self.processor(text=prompts, images=crop, return_tensors="pt", padding=True)
-                if torch.cuda.is_available():
-                    inputs = {k: v.to("cuda") for k, v in inputs.items()}
+        if not self.available or self.model is None or self.processor is None:
+            return []
 
-                with torch.no_grad():
-                    outputs = self.model(**inputs)
-                    logits_per_image = outputs.logits_per_image # image-text similarity score
-                    probs = logits_per_image.softmax(dim=1)[0].cpu().numpy()
+        try:
+            inputs = self.processor(text=prompts, images=crop, return_tensors="pt", padding=True)
+            if torch.cuda.is_available():
+                inputs = {k: v.to("cuda") for k, v in inputs.items()}
 
-                ranked = [(labels[i], float(probs[i])) for i in range(len(labels))]
-                ranked.sort(key=lambda x: x[1], reverse=True)
-                return ranked
-            except Exception as e:
-                logger.error(f"FashionCLIP inference error: {e}")
+            with torch.no_grad():
+                outputs = self.model(**inputs)
+                logits_per_image = outputs.logits_per_image
+                probs = logits_per_image.softmax(dim=1)[0].cpu().numpy()
 
-        # Fallback scoring
-        return [(labels[0], 0.85)] + [(labels[i], 0.15 / max(1, len(labels)-1)) for i in range(1, len(labels))]
+            ranked = [(labels[i], float(probs[i])) for i in range(len(labels))]
+            ranked.sort(key=lambda x: x[1], reverse=True)
+            return ranked
+        except Exception as e:
+            logger.error(f"FashionCLIP ranking error: {e}")
+            return []

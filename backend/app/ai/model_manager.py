@@ -1,8 +1,8 @@
 """
-Model Lifecycle Manager — Multi-Model Provider Registry and Health Checker.
+Model Lifecycle Manager — Multi-Model Provider Registry and Status Monitor.
 
-Orchestrates loading, lazy-loading, and status monitoring for all multi-model vision providers.
-Supports graceful degradation if specific model weights are downloading or offline.
+Orchestrates loading, lazy-loading, and diagnostic monitoring for all vision providers.
+Never hides model offline errors or substitutes fake detections.
 """
 
 from typing import Dict, Any
@@ -44,14 +44,38 @@ class ModelManager:
         statuses = self.get_provider_status()
         logger.info(f"Multi-Model CV Providers Status: {statuses}")
 
-    def get_provider_status(self) -> Dict[str, str]:
+    def get_provider_status(self) -> Dict[str, Any]:
         return {
-            "grounding_dino": "available" if self.grounding_dino.available else "fallback",
-            "florence_2": "available" if self.florence.available else "fallback",
-            "deepfashion2": "available" if self.deepfashion2.available else "fallback",
-            "sam2_1": "available" if self.sam2.available else "fallback",
-            "fashionclip": "available" if self.fashionclip.available else "fallback",
-            "qwen2_5_vl": "available" if self.qwen_vl.available else "fallback",
-            "garment_attributes": "available" if self.garment_attributes.available else "fallback",
-            "footwear_classifier": "available"
+            "grounding_dino": {
+                "status": "available" if self.grounding_dino.available else "unavailable",
+                "error": getattr(self.grounding_dino, "error_reason", None)
+            },
+            "florence_2": {
+                "status": "available" if self.florence.available else "unavailable",
+                "error": getattr(self.florence, "error_reason", None)
+            },
+            "deepfashion2": {
+                "status": "available" if self.deepfashion2.available else "unavailable",
+                "error": getattr(self.deepfashion2, "error_reason", None)
+            },
+            "sam2": {
+                "status": "available" if self.sam2.available else "unavailable",
+                "error": getattr(self.sam2, "error_reason", None)
+            },
+            "fashionclip": {
+                "status": "available" if self.fashionclip.available else "unavailable",
+                "mode": getattr(self.fashionclip, "mode", "fashion_clip"),
+                "error": getattr(self.fashionclip, "error_reason", None)
+            },
+            "qwen2_5_vl": {
+                "status": "available" if self.qwen_vl.available else "unavailable",
+                "error": getattr(self.qwen_vl, "error_reason", None)
+            },
+            "garment_attributes": {
+                "status": "available" if self.garment_attributes.available else "unavailable",
+                "error": getattr(self.garment_attributes, "error_reason", None)
+            },
+            "footwear_classifier": {
+                "status": "available"
+            }
         }
